@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.AdminController" spacing="10" alignment="CENTER">
+    <Label text="Admin Dashboard" />
+
+    <Button text="Invite User" onAction="#handleInviteUser" />
+    <Button text="Reset User Account" onAction="#handleResetUserAccount" />
+    <Button text="Delete User" onAction="#handleDeleteUser" />
+    <Button text="List User Accounts" onAction="#handleListUserAccounts" />
+    <Button text="Add/Remove Roles" onAction="#handleManageRoles" />
+    <Button text="Logout" onAction="#handleLogout" />
+</VBox>
