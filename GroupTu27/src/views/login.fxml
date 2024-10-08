@@ -4,19 +4,36 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.LoginController" hgap="10" vgap="10" alignment="CENTER">
-    <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-    <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+<GridPane alignment="CENTER" hgap="10" prefHeight="240.0" prefWidth="520.0" vgap="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="usernameField" promptText="Enter Username here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
     
-    <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-    <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <PasswordField fx:id="passwordField" prefHeight="26.0" prefWidth="166.0" promptText="Enter Password here" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-    <Button text="Login" onAction="#handleLogin" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    <Button alignment="CENTER" onAction="#handleLogin" text="Login" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
 
-    <Label text="OR Enter Invitation Code:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-    <TextField fx:id="invitationCodeField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+    <Label text="Enter Invitation Code:" GridPane.rowIndex="4" />
+    <TextField fx:id="invitationCodeField" promptText="Enter Invitation code here" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     
-    <Button text="Use Invitation Code" onAction="#handleInvitationCode" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+    <Button onAction="#handleInvitationCode" text="Submit" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+   <Label text="Returning Users:" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+   <Label prefHeight="40.0" prefWidth="86.0" text="First Time Users:" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+   <columnConstraints>
+      <ColumnConstraints halignment="CENTER" maxWidth="228.0000244140625" minWidth="121.5999755859375" prefWidth="121.5999755859375" />
+      <ColumnConstraints maxWidth="216.0000244140625" minWidth="71.99997558593753" prefWidth="216.0000244140625" />
+      <ColumnConstraints maxWidth="174.40000000000003" minWidth="71.99997558593753" prefWidth="119.19997558593747" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
