@@ -4,8 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.HomeController" spacing="10" alignment="CENTER">
-    <Label fx:id="welcomeLabel" text="Welcome to Your Home Page" />
+<VBox alignment="CENTER" prefHeight="240.0" prefWidth="520.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="controllers.HomeController">
+    <Label fx:id="welcomeLabel" text="Welcome to the Home Page!" />
 
-    <Button text="Logout" onAction="#handleLogout" />
+    <Button onAction="#handleLogout" text="Logout" />
 </VBox>
