@@ -4,10 +4,14 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.RoleSelectionController" spacing="10" alignment="CENTER">
-    <Label text="Select a Role for this Session:" />
-    <ComboBox fx:id="roleComboBox" />
+<VBox alignment="CENTER" prefHeight="240.0" prefWidth="520.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="controllers.RoleSelectionController">
+    <Label text="Select a Role for this Session:">
+      <font>
+         <Font name="System Bold" size="24.0" />
+      </font></Label>
+    <ComboBox fx:id="roleComboBox" promptText="Choose Role" />
     
-    <Button text="Continue" onAction="#handleSelectRole" />
+    <Button onAction="#handleSelectRole" text="Continue" />
 </VBox>
