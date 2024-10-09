@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="CENTER" hgap="10" prefHeight="240.0" prefWidth="520.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="controllers.SetupAccountController">
+<GridPane alignment="CENTER" hgap="10" prefHeight="240.0" prefWidth="520.0" vgap="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SetupAccountController">
     <Label text="First Name:" GridPane.halignment="RIGHT" />
     <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
     
@@ -18,7 +18,7 @@
     <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
     
     <Label text="Preferred First Name (Optional):" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-    <TextField fx:id="preferredNameField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <TextField fx:id="preferredFirstNameField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <Label text="Email:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
     <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="4" />

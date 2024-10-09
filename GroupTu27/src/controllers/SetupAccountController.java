@@ -45,7 +45,7 @@ public class SetupAccountController {
 
     private void navigateToLoginPage() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/views/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) firstNameField.getScene().getWindow();

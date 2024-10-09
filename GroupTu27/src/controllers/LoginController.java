@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,40 +32,72 @@ public class LoginController {
     private PasswordField passwordField;
     
     @FXML
+    private PasswordField confirmPasswordField;
+    
+    @FXML
     private TextField invitationCodeField;
 
     @FXML
     private Label errorMessageLabel;
 
     private List<User> users;  // Assuming user list is managed here (ideally would be in a service)
+    
 
     public LoginController() {
     	//Default Constructor
+    	this.users = new ArrayList<>();  // Initialize with an empty ArrayList
     }
     
     public LoginController(List<User> users) {
         this.users = users;
     }
+    
 
     // This function takes the information input to check for valid login
     @FXML
-    private void handleLogin() {	
-        String username = usernameField.getText();	// Gather text from username text field
-        String password = passwordField.getText();	// Gather text from password text field
+    private void handleLogin() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
 
-        User user = findUserByUsername(username);	// Call function to find the appropriate account
+        if (users.isEmpty()) {
+            // The system has no users; the first user must create an admin account
+            if (validateAdminCreation(username, password)) {
+                User newUser = new User(username, password);
+                newUser.addRole(new Role("Admin"));
+                users.add(newUser);
+                errorMessageLabel.setText("Admin account created. Please log in again.");
+                clearLoginForm();
+                return;
+            } else {
+                errorMessageLabel.setText("Passwords do not match or are invalid.");
+                return;
+            }
+        }
 
-        // This checks for a correct password
+        User user = findUserByUsername(username);
         if (user != null && user.getPassword().equals(password)) {
             if (!user.isAccountSetupComplete()) {
-                loadSetupAccountPage(user);	// Setup account if it has not been complete yet
+                loadSetupAccountPage(user);
             } else {
-                navigateToHomePage(user);	// Otherwise, go to appropriate home page for user
+                navigateToHomePage(user);
             }
         } else {
-            errorMessageLabel.setText("Invalid username or password.");	// If password does not match, send error msg
+            errorMessageLabel.setText("Invalid username or password.");
         }
     }
+
+    private boolean validateAdminCreation(String username, String password) {
+        String confirmPassword = confirmPasswordField.getText();  // Confirm password field should be added to UI
+        return password != null && !password.isEmpty() && password.equals(confirmPassword) && username != null && !username.isEmpty();
+    }
+
+    private void clearLoginForm() {
+        usernameField.clear();
+        passwordField.clear();
+        confirmPasswordField.clear();
+        invitationCodeField.clear();
+    }
+
     
     // This function compares the invitation code to find appropriate account
     public void handleInvitationCode() {	
@@ -80,7 +113,7 @@ public class LoginController {
 	// When setting up a new account, this function creates and loads the GUI
     private void loadSetupAccountPage(User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/views/setupAccount.fxml"));	// Fetching settings for the GUI
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/setupAccount.fxml"));	// Fetching settings for the GUI
             Parent root = loader.load();
             
             SetupAccountController controller = loader.getController();	// Loading up the new controller for setting up an account
