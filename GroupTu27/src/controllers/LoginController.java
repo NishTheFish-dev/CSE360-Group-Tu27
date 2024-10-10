@@ -2,6 +2,7 @@ package controllers;
 
 import models.User;
 import models.Role;
+import models.UserService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -40,16 +41,11 @@ public class LoginController {
     @FXML
     private Label errorMessageLabel;
 
-    private List<User> users;  // Assuming user list is managed here (ideally would be in a service)
+    private UserService userService; // Reference to the user service
     
-
+    //Default Constructor
     public LoginController() {
-    	//Default Constructor
-    	this.users = new ArrayList<>();  // Initialize with an empty ArrayList
-    }
-    
-    public LoginController(List<User> users) {
-        this.users = users;
+        this.userService = UserService.getInstance(); // Get the singleton instance of UserService
     }
     
 
@@ -58,13 +54,16 @@ public class LoginController {
     private void handleLogin() {
         String username = usernameField.getText();
         String password = passwordField.getText();
+        
+        List<User> users = userService.getUsers(); // Get the list of users from the service
 
         if (users.isEmpty()) {
             // The system has no users; the first user must create an admin account
             if (validateAdminCreation(username, password)) {
                 User newUser = new User(username, password);
                 newUser.addRole(new Role("Admin"));
-                users.add(newUser);
+                userService.addUser(newUser); // Save the new user in the service
+                System.out.print(users);
                 errorMessageLabel.setText("Admin account created. Please log in again.");
                 clearLoginForm();
                 return;
@@ -74,7 +73,7 @@ public class LoginController {
             }
         }
 
-        User user = findUserByUsername(username);
+        User user = userService.findUserByUsername(username); // Use the service to find the user
         if (user != null && user.getPassword().equals(password)) {
             if (!user.isAccountSetupComplete()) {
                 loadSetupAccountPage(user);
@@ -84,10 +83,11 @@ public class LoginController {
         } else {
             errorMessageLabel.setText("Invalid username or password.");
         }
+        
     }
 
     private boolean validateAdminCreation(String username, String password) {
-        String confirmPassword = confirmPasswordField.getText();  // Confirm password field should be added to UI
+        String confirmPassword = confirmPasswordField.getText();  // Confirm password field is filled out one time
         return password != null && !password.isEmpty() && password.equals(confirmPassword) && username != null && !username.isEmpty();
     }
 
@@ -105,10 +105,6 @@ public class LoginController {
         // Process the invitation code and navigate to account setup
     }
 
-	// This is useful when comparing username and password
-    private User findUserByUsername(String username) {
-        return users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
-    }
 
 	// When setting up a new account, this function creates and loads the GUI
     private void loadSetupAccountPage(User user) {
@@ -134,7 +130,7 @@ public class LoginController {
                 loadRoleHomePage(user, user.getRoles().get(0));	// With only 1 role, find and load into the correct home page
             } else {	// If there is more than 1 role, we go to role selection
                 // Load role selection page if user has multiple roles
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/views/roleSelection.fxml"));	// Loading the GUI settings for role selection
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/roleSelection.fxml"));	// Loading the GUI settings for role selection
                 Parent root = loader.load();
                 
                 Stage stage = (Stage) usernameField.getScene().getWindow();
@@ -146,15 +142,20 @@ public class LoginController {
         }
     }
 
+    
+    
 	// In the case somebody has been assigned more than 1 role, this allows them to choose which home page to navigate to
     private void loadRoleHomePage(User user, Role role) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/views/" + role.getRoleName() + "Home.fxml"));	// Loading GUI settings for the appropriate home page
-            Parent root = loader.load();
-            
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();	// Show the loaded scene
+        	if (user.hasRole(role)) {
+        		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/adminDashboard.fxml" ));	// Loading GUI settings for the appropriate home page
+                Parent root = loader.load();
+                
+                Stage stage = (Stage) usernameField.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();	// Show the loaded scene
+        	}
+        	
         } catch (Exception e) {
             e.printStackTrace();
         }

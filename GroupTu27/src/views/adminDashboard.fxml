@@ -31,9 +31,9 @@
      </rowConstraints>
       <children>
       
-                                  <Button onAction="#handleInviteUser" text="Invite User" GridPane.halignment="CENTER" />
+          <Button onAction="#handleInviteUser" text="Invite User" GridPane.halignment="CENTER" />
           <Button onAction="#handleResetUserAccount" text="Reset User Account" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-          <Button onAction="#handleDeleteUser" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+          <Button onAction="#handleDeleteUserAccount" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
           <Button onAction="#handleListUserAccounts" text="List User Accounts" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
           <Button onAction="#handleManageRoles" text="Add/Remove Roles" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
       </children>
