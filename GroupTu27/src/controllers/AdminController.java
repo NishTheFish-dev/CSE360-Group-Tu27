@@ -8,8 +8,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+<<<<<<< HEAD
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+=======
+>>>>>>> branch 'main' of https://github.com/NishTheFish-dev/CSE360-Group-Tu27.git
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -100,23 +103,27 @@ public class AdminController {
     }
     */
     
+    // This function will open the page used for resetting user accounts
     @FXML
-    private void handleResetUserAccount() {
+    private void handleResetUserAccount() {		// Function used for the "Reset User Account" button
     	//TO-DO
     }
     
+    // This function will open the page used for deleting user accounts
     @FXML
-    private void handleDeleteUserAccount() {
+    private void handleDeleteUserAccount() {	// Function used for the "Delete User Account" button
     	//TO-DO
     }
     
+    // This function will open the page used for listing all users
     @FXML
-    private void handleListUserAccounts() {
+    private void handleListUserAccounts() {		// Function used for the "List User Accounts" button
     	//TO-DO
     }
     
+    // This function will open the page used for managing the roles of users
     @FXML
-    private void handleManageRoles() {
+    private void handleManageRoles() {			// Function used for the "Manage Roles" button
     	//TO-DO
     	roleChoice.setVisible(true);
     	inviteCodeLabel.setVisible(false);
@@ -152,6 +159,7 @@ public class AdminController {
             // Load the login FXML
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
             Parent root = loader.load();
+
 
             // Get the current stage (from any component within the scene, e.g., usernameField)
             Stage stage = (Stage) inviteCodeLabel.getScene().getWindow();
