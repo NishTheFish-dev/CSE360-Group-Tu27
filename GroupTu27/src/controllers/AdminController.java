@@ -73,23 +73,27 @@ public class AdminController {
     }
     */
     
+    // This function will open the page used for resetting user accounts
     @FXML
-    private void handleResetUserAccount() {
+    private void handleResetUserAccount() {		// Function used for the "Reset User Account" button
     	//TO-DO
     }
     
+    // This function will open the page used for deleting user accounts
     @FXML
-    private void handleDeleteUserAccount() {
+    private void handleDeleteUserAccount() {	// Function used for the "Delete User Account" button
     	//TO-DO
     }
     
+    // This function will open the page used for listing all users
     @FXML
-    private void handleListUserAccounts() {
+    private void handleListUserAccounts() {		// Function used for the "List User Accounts" button
     	//TO-DO
     }
     
+    // This function will open the page used for managing the roles of users
     @FXML
-    private void handleManageRoles() {
+    private void handleManageRoles() {			// Function used for the "Manage Roles" button
     	//TO-DO
     }
     

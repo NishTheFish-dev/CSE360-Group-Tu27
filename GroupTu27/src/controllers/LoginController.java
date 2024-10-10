@@ -91,11 +91,11 @@ public class LoginController {
         return password != null && !password.isEmpty() && password.equals(confirmPassword) && username != null && !username.isEmpty();
     }
 
-    private void clearLoginForm() {
-        usernameField.clear();
-        passwordField.clear();
-        confirmPasswordField.clear();
-        invitationCodeField.clear();
+    private void clearLoginForm() {		// This function clears all fields in the page. This is mainly for after creating a new account
+        usernameField.clear();			// Clear the username
+        passwordField.clear();			// Clear the password
+        confirmPasswordField.clear();	// Clear the confirm password
+        invitationCodeField.clear();	// Clear invitation code
     }
 
     
