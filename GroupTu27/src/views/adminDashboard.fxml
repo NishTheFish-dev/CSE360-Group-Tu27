@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="240.0" prefWidth="520.0" spacing="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+<VBox alignment="CENTER" prefHeight="240.0" prefWidth="521.0" spacing="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
     <Label text="Admin Dashboard">
       <font>
          <Font name="System Bold" size="24.0" />
@@ -20,10 +20,11 @@
          <Font name="System Bold" size="14.0" />
       </font>
    </Label>
-   <GridPane prefWidth="224.0">
+   <GridPane>
      <columnConstraints>
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
      </columnConstraints>
      <rowConstraints>
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -32,23 +33,23 @@
      </rowConstraints>
       <children>
       
-          <Button onAction="#handleInviteUser" text="Invite User" GridPane.halignment="CENTER" />
-          <Button onAction="#handleResetUserAccount" text="Reset User Account" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+          <Button onAction="#handleInviteUser" text="Invite User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+          <Button onAction="#handleResetUserAccount" text="Reset User Account" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
           <Button onAction="#handleDeleteUserAccount" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-          <Button onAction="#handleListUserAccounts" text="List User Accounts" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-          <Button onAction="#handleManageRoles" text="Add/Remove Roles" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-     	  <Label fx:id="inviteCodeLabel" text="blahblah" visible="false" GridPane.columnSpan="2">
+          <Button onAction="#handleListUserAccounts" text="List User Accounts" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+          <Button onAction="#handleManageRoles" text="Add/Remove Roles" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+     	  <Label fx:id="inviteCodeLabel" text="blahblah" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
             <GridPane.margin>
-               <Insets left="200.0" />
+               <Insets />
             </GridPane.margin></Label>
-         <ChoiceBox fx:id="roleChoice" prefWidth="100.0" visible="false" GridPane.columnIndex="1">
+         <ChoiceBox fx:id="roleChoice" prefWidth="100.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
             <GridPane.margin>
-               <Insets left="-55.0" />
+               <Insets />
             </GridPane.margin>
          </ChoiceBox>
-         <Label fx:id="roleLabel" text="Choosing role..." visible="false" GridPane.columnIndex="1">
+         <Label fx:id="roleLabel" text="Choosing role..." visible="false" GridPane.halignment="CENTER">
             <GridPane.margin>
-               <Insets left="-20.0" top="140.0" />
+               <Insets />
             </GridPane.margin>
          </Label>
           

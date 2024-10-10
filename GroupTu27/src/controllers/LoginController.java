@@ -99,8 +99,14 @@ public class LoginController {
 
     
     // This function compares the invitation code to find appropriate account
-    public void handleInvitationCode() {	
+    public void handleInvitationCode() {
+    	String username = usernameField.getText();
+        String password = passwordField.getText();
         String code = invitationCodeField.getText();
+        if(code == userService.getCode()) {
+        	User user = new User(username, password);
+        	loadSetupAccountPage(user);
+        }
         // Process the invitation code and navigate to account setup
     }
 
