@@ -3,6 +3,14 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * This handles the list of users during the current instance. The list is reset upon app reset.
+ * 
+ * Handled variables are userservice and the list of users
+ * 
+ **/
+
 public class UserService {
     private static UserService instance;
     private List<User> users;
@@ -13,19 +21,20 @@ public class UserService {
 
     public static UserService getInstance() {
         if (instance == null) {
-            instance = new UserService();
+            instance = new UserService();	// Start a new instance for the list of users
         }
         return instance;
     }
 
     public List<User> getUsers() {
-        return users;
+        return users;	// Get the user list
     }
 
     public void addUser(User user) {
-        users.add(user);
+        users.add(user);	// Add a user to the list
     }
 
+    // This function finds a user by username 
     public User findUserByUsername(String username) {
         return users.stream().filter(u -> u.getUsername().equals(username)).findFirst().orElse(null);
     }
