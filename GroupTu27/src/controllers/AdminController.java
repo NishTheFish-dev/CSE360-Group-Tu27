@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -108,8 +109,8 @@ public class AdminController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
             Parent root = loader.load();
 
-            // Get the current stage (from any component within the scene, e.g., usernameField)
-            Stage stage = (Stage) inviteUsernameField.getScene().getWindow();
+            // Get the current stage
+            Stage stage = (Stage) admin.getScene().getWindow();
 
             // Set the new scene for the stage (the login scene)
             stage.setScene(new Scene(root));
