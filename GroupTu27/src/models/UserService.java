@@ -14,14 +14,13 @@ import java.util.List;
 public class UserService {
     private static UserService instance;
     private List<User> users;
+    private List<String> codes;
 
     private UserService() {
         users = new ArrayList<>(); // Initialize with an empty list of users
+        codes = new ArrayList<>();
     }
     
-    public void getUser() {
-    	
-    }
     
     public static UserService getInstance() {
         if (instance == null) {
@@ -36,6 +35,13 @@ public class UserService {
 
     public void addUser(User user) {
         users.add(user);	// Add a user to the list
+    }
+    
+    public void addCode(String code) {
+    	codes.add(code);
+    }
+    public String getCode() {
+    	return codes.get(0);
     }
 
     // This function finds a user by username 

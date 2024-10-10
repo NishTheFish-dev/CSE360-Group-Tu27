@@ -48,7 +48,7 @@ public class AdminController {
     private User currentUser;
     
     private List<User> UserList;
-    	
+    
     	
     
     public AdminController() {
@@ -71,7 +71,9 @@ public class AdminController {
     private void handleInviteUser() {
         //String username = inviteUsernameField.getText();	// Choose a username to assign to the new user
        // String roleName = inviteRoleField.getText();	// Choose a role to assign to the new user
-        String inviteCode = generateCode();
+        roleChoice.setVisible(false);
+        roleLabel.setVisible(false);
+    	String inviteCode = generateCode();
        // if (username.isEmpty() || roleName.isEmpty()) {	// If either field is empty, cancel and possibly send error msg
         //    return;  // Add some validation feedback here
       //  }
@@ -88,6 +90,7 @@ public class AdminController {
         //updateUserList();		// Update the list to include the new user
         inviteCodeLabel.setVisible(true);
         inviteCodeLabel.setText("Random Code: " + inviteCode);
+        userService.addCode(inviteCode);
     }
 
     /* TEST LATER
@@ -115,15 +118,17 @@ public class AdminController {
     @FXML
     private void handleListUserAccounts() {		// Function used for the "List User Accounts" button
     	//TO-DO
+    	
     }
     
     // This function will open the page used for managing the roles of users
     @FXML
     private void handleManageRoles() {			// Function used for the "Manage Roles" button
     	//TO-DO
-    	roleChoice.setVisible(true);
+    	roleChoice.getItems().clear();
+    	roleChoice.setVisible(true); //Remove inviteLabel and show roleChoice
     	inviteCodeLabel.setVisible(false);
-    	roleChoice.getItems().addAll("Admin", "User", "Team Member");
+    	roleChoice.getItems().addAll("Admin", "Student", "Teacher");
     		roleChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
     			if(!currentUser.hasRole(new Role(newValue))){ //Looks at the ChoiceBox and checks the current value against the newValue
     				roleLabel.setVisible(true); //Sets the roleLabel to visible and adds text to it for selected role
