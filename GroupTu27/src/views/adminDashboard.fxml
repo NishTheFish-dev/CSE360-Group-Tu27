@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="240.0" prefWidth="520.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="controllers.AdminController">
+<VBox alignment="CENTER" prefHeight="240.0" prefWidth="520.0" spacing="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
     <Label text="Admin Dashboard">
       <font>
          <Font name="System Bold" size="24.0" />
@@ -36,10 +37,26 @@
           <Button onAction="#handleDeleteUserAccount" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
           <Button onAction="#handleListUserAccounts" text="List User Accounts" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
           <Button onAction="#handleManageRoles" text="Add/Remove Roles" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+     	  <Label fx:id="inviteCodeLabel" text="blahblah" visible="false" GridPane.columnSpan="2">
+            <GridPane.margin>
+               <Insets left="200.0" />
+            </GridPane.margin></Label>
+         <ChoiceBox fx:id="roleChoice" prefWidth="100.0" visible="false" GridPane.columnIndex="1">
+            <GridPane.margin>
+               <Insets left="-55.0" />
+            </GridPane.margin>
+         </ChoiceBox>
+         <Label fx:id="roleLabel" text="Choosing role..." visible="false" GridPane.columnIndex="1">
+            <GridPane.margin>
+               <Insets left="-20.0" top="140.0" />
+            </GridPane.margin>
+         </Label>
+          
       </children>
       <VBox.margin>
          <Insets />
       </VBox.margin>
    </GridPane>
+   
     <Button alignment="CENTER" onAction="#handleLogout" text="Logout" />
 </VBox>

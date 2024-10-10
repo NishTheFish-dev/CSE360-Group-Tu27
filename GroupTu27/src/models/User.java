@@ -85,7 +85,8 @@ public class User {
     public void setAccountSetupComplete(boolean accountSetupComplete) {
         isAccountSetupComplete = accountSetupComplete;
     }
-
+ 
+    
     public List<Role> getRoles() {
         return roles;
     }

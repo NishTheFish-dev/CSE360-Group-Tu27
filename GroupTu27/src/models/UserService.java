@@ -10,7 +10,11 @@ public class UserService {
     private UserService() {
         users = new ArrayList<>(); // Initialize with an empty list of users
     }
-
+    
+    public void getUser() {
+    	
+    }
+    
     public static UserService getInstance() {
         if (instance == null) {
             instance = new UserService();

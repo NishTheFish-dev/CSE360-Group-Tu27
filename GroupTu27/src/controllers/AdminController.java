@@ -1,5 +1,5 @@
 package controllers;
-
+import java.util.Random;
 import models.User;
 import models.UserService;
 import models.InvitationCode;
@@ -8,6 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -31,8 +34,23 @@ public class AdminController {
 
     @FXML
     private ListView<String> userListView;  // List view to display user information
-
+    
+    @FXML
+    private Label inviteCodeLabel;
+    
+    @FXML
+    private Label roleLabel;
+    
+    @FXML
+    private ChoiceBox<String> roleChoice;
+    
     private UserService userService; // Reference to the user service
+    
+    private User currentUser;
+    
+    private List<User> UserList;
+    	
+    	
     
     public AdminController() {
     	this.userService = UserService.getInstance(); // Get the singleton instance of UserService
@@ -41,27 +59,36 @@ public class AdminController {
     @FXML
     private void initialize() {
         //updateUserList();
+    	UserList = userService.getUsers(); 
+        if (!UserList.isEmpty()) { //Grabs the firstmade user to be current for now (First made user will always be admin)
+            currentUser = UserList.get(0); 
+        } else {
+            // Handle the case where the list is empty, e.g.,
+            System.out.println("No users found."); 
+        }
     }
 
     @FXML
     private void handleInviteUser() {
-        String username = inviteUsernameField.getText();	// Choose a username to assign to the new user
-        String roleName = inviteRoleField.getText();	// Choose a role to assign to the new user
+        //String username = inviteUsernameField.getText();	// Choose a username to assign to the new user
+       // String roleName = inviteRoleField.getText();	// Choose a role to assign to the new user
+        String inviteCode = generateCode();
+       // if (username.isEmpty() || roleName.isEmpty()) {	// If either field is empty, cancel and possibly send error msg
+        //    return;  // Add some validation feedback here
+      //  }
 
-        if (username.isEmpty() || roleName.isEmpty()) {	// If either field is empty, cancel and possibly send error msg
-            return;  // Add some validation feedback here
-        }
+     //   Role role = new Role(roleName);	//assign the chosen role to a variable through the Role command
+      //  InvitationCode code = new InvitationCode(generateCode(), role, LocalDateTime.now().plusDays(1));  // 1 day expiration
 
-        Role role = new Role(roleName);	//assign the chosen role to a variable through the Role command
-        InvitationCode code = new InvitationCode(generateCode(), role, LocalDateTime.now().plusDays(1));  // 1 day expiration
-
-        System.out.println("Invitation Code: " + code.getCode());  // Simulate sending the code to the user
+      //  System.out.println("Invitation Code: " + code.getCode());  // Simulate sending the code to the user
         
         // Store the user (you'll need a service to save this)
-        User newUser = new User(username, null);  // No password yet, user will create it
-        newUser.addRole(role);	// Assign the new user the specified role by admin
-        userService.addUser(newUser); // After adding all of the information, add the user to the list
+      //  User newUser = new User(username, null);  // No password yet, user will create it
+       // newUser.addRole(role);	// Assign the new user the specified role by admin
+       // userService.addUser(newUser); // After adding all of the information, add the user to the list
         //updateUserList();		// Update the list to include the new user
+        inviteCodeLabel.setVisible(true);
+        inviteCodeLabel.setText("Random Code: " + inviteCode);
     }
 
     /* TEST LATER
@@ -91,10 +118,32 @@ public class AdminController {
     @FXML
     private void handleManageRoles() {
     	//TO-DO
+    	roleChoice.setVisible(true);
+    	inviteCodeLabel.setVisible(false);
+    	roleChoice.getItems().addAll("Admin", "User", "Team Member");
+    		roleChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    			if(!currentUser.hasRole(new Role(newValue))){ //Looks at the ChoiceBox and checks the current value against the newValue
+    				roleLabel.setVisible(true); //Sets the roleLabel to visible and adds text to it for selected role
+    				roleLabel.setText("Selected: " + newValue);
+    				currentUser.addRole(new Role(newValue)); //Gives Current User selected role in the choiceBox
+    			} else {
+    				roleLabel.setVisible(true); //Sets the label to tell admin that user already has selected role
+    				roleLabel.setText("User already has that role!");
+    			}
+    		});
+    	roleLabel.setVisible(false);
     }
     
+    
     private String generateCode() {	// Generating a code, likely for an invitation
-        return "ABC123";  // Ideally this would generate a random code
+    	int length = 6; //Code length will be 6, underneath is the string of characters it can take from
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random(); //Random variable
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < length; i++) { //Gets random character and appends it to code
+            code.append(characters.charAt(random.nextInt(characters.length())));
+        }
+        return code.toString();  // Ideally this would generate a random code
     }
     
     @FXML
@@ -105,7 +154,7 @@ public class AdminController {
             Parent root = loader.load();
 
             // Get the current stage (from any component within the scene, e.g., usernameField)
-            Stage stage = (Stage) inviteUsernameField.getScene().getWindow();
+            Stage stage = (Stage) inviteCodeLabel.getScene().getWindow();
 
             // Set the new scene for the stage (the login scene)
             stage.setScene(new Scene(root));
