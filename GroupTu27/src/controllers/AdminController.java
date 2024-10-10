@@ -8,11 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-<<<<<<< HEAD
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-=======
->>>>>>> branch 'main' of https://github.com/NishTheFish-dev/CSE360-Group-Tu27.git
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
