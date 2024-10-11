@@ -15,12 +15,17 @@ public class UserService {
     private static UserService instance;
     private List<User> users;
     private List<String> codes;
+    //private String curCode;
 
     private UserService() {
-        users = new ArrayList<>(); // Initialize with an empty list of users
-        codes = new ArrayList<>();
+        this.users = new ArrayList<>(); // Initialize with an empty list of users
+        this.codes = new ArrayList<>();
+        
     }
     
+    public void clearCode() {
+    	codes.clear();
+    }
     
     public static UserService getInstance() {
         if (instance == null) {

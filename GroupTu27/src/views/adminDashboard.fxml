@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -25,6 +26,7 @@
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints />
      </columnConstraints>
      <rowConstraints>
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -36,22 +38,23 @@
           <Button onAction="#handleInviteUser" text="Invite User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
           <Button onAction="#handleResetUserAccount" text="Reset User Account" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
           <Button onAction="#handleDeleteUserAccount" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-          <Button onAction="#handleListUserAccounts" text="List User Accounts" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-          <Button onAction="#handleManageRoles" text="Add/Remove Roles" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+          <Button fx:id="listUserButton" onAction="#handleListUserAccounts" text="List User Accounts" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+          <Button onAction="#handleManageRoles" text="Add/Remove Roles" GridPane.halignment="CENTER" />
      	  <Label fx:id="inviteCodeLabel" text="blahblah" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
             <GridPane.margin>
                <Insets />
             </GridPane.margin></Label>
-         <ChoiceBox fx:id="roleChoice" prefWidth="100.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+         <ChoiceBox fx:id="roleChoice" prefWidth="100.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
             <GridPane.margin>
                <Insets />
             </GridPane.margin>
          </ChoiceBox>
-         <Label fx:id="roleLabel" text="Choosing role..." visible="false" GridPane.halignment="CENTER">
+         <Label fx:id="roleLabel" text="Choosing role..." visible="false" GridPane.halignment="CENTER" GridPane.valignment="TOP">
             <GridPane.margin>
-               <Insets />
+               <Insets top="-20.0" />
             </GridPane.margin>
          </Label>
+         <ListView fx:id="userListView" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
           
       </children>
       <VBox.margin>

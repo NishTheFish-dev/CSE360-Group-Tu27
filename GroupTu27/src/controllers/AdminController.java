@@ -1,13 +1,16 @@
 package controllers;
 import java.util.Random;
+import java.util.stream.Collectors;
 import models.User;
 import models.UserService;
 import models.InvitationCode;
 import models.Role;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -15,7 +18,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 
 /**
  * The admin controller is used to give the admin page function.
@@ -41,6 +47,9 @@ public class AdminController {
     private Label roleLabel;
     
     @FXML
+    private Button listUserButton;
+    
+    @FXML
     private ChoiceBox<String> roleChoice;
     
     private UserService userService; // Reference to the user service
@@ -49,7 +58,6 @@ public class AdminController {
     
     private List<User> UserList;
     
-    	
     
     public AdminController() {
     	this.userService = UserService.getInstance(); // Get the singleton instance of UserService
@@ -74,6 +82,7 @@ public class AdminController {
         roleChoice.setVisible(false);
         roleLabel.setVisible(false);
     	String inviteCode = generateCode();
+    	userService.clearCode();
        // if (username.isEmpty() || roleName.isEmpty()) {	// If either field is empty, cancel and possibly send error msg
         //    return;  // Add some validation feedback here
       //  }
@@ -118,7 +127,24 @@ public class AdminController {
     @FXML
     private void handleListUserAccounts() {		// Function used for the "List User Accounts" button
     	//TO-DO
+    	if(userListView.isVisible() == true) {
+    		System.out.println(userListView.isVisible());
+    		userListView.setVisible(false);
+    		System.out.println("visible false");
+    		listUserButton.setText("List User Accounts");
+    	} else if(userListView.isVisible() == false) {
+    		userListView.setVisible(true);
+    		listUserButton.setText("Remove User List");
+    		System.out.println(userListView.isVisible());
+    	}
     	
+    	inviteCodeLabel.setVisible(false);
+    	List<String> userNames = new ArrayList<>();
+    	userNames = userService.getUsers().stream().map(User::getUsername).collect(Collectors.toList());
+    	ObservableList<String> users = FXCollections.observableArrayList(userNames);
+    	System.out.println(userNames);
+    	System.out.println(users);
+    	userListView.setItems(users);
     }
     
     // This function will open the page used for managing the roles of users

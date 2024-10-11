@@ -102,10 +102,25 @@ public class LoginController {
     public void handleInvitationCode() {
     	String username = usernameField.getText();
         String password = passwordField.getText();
+        String confirmPass = confirmPasswordField.getText();
         String code = invitationCodeField.getText();
-        if(code == userService.getCode()) {
-        	User user = new User(username, password);
-        	loadSetupAccountPage(user);
+        System.out.println(code.getClass().getName());
+        System.out.println(userService.getCode().getClass().getName());
+        if(code.equals(userService.getCode())) {
+        	if(!username.isEmpty() || !password.isEmpty() || !confirmPass.isEmpty()) {
+        		System.out.println("true");
+        		User user = new User(username, password);
+        		user.addRole(new Role("Student"));
+        		userService.addUser(user);
+        		System.out.println(user);
+        		loadSetupAccountPage(user);
+        		userService.clearCode();
+        		
+        	} else if(username.isEmpty() || password.isEmpty() || confirmPass.isEmpty()) {
+        		errorMessageLabel.setText("Please fill in all fields above first.");
+        	}
+        } else {
+        	errorMessageLabel.setText("Incorrect Invite Code.");
         }
         // Process the invitation code and navigate to account setup
     }
@@ -152,8 +167,15 @@ public class LoginController {
 	// In the case somebody has been assigned more than 1 role, this allows them to choose which home page to navigate to
     private void loadRoleHomePage(User user, Role role) {
         try {
-        	if (user.hasRole(role)) {
+        	if (user.hasRole(new Role("Admin"))) {
         		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/adminDashboard.fxml" ));	// Loading GUI settings for the appropriate home page
+                Parent root = loader.load();
+                
+                Stage stage = (Stage) usernameField.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();	// Show the loaded scene
+        	} else if(user.hasRole(new Role("Student"))) {
+        		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/home.fxml" ));	// Loading GUI settings for the appropriate home page
                 Parent root = loader.load();
                 
                 Stage stage = (Stage) usernameField.getScene().getWindow();
