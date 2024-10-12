@@ -1,0 +1,20 @@
+.VBox {
+    -fx-background-color: orange; 
+}
+
+.button {
+    -fx-background-color: #c4c0be; /* Light gray */
+    -fx-text-fill: #333331; 
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+}
+
+.button:hover {
+    -fx-background-color: #d1a092; /* Slightly darker gray on hover */
+}
+#userListView .label {
+	-fx-background-color: #d1a092;
+}
+#userListView .context-menu {
+	-fx-background-color: #bda28a;
+}

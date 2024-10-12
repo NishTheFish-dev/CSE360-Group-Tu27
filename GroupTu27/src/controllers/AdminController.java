@@ -50,13 +50,24 @@ public class AdminController {
     private Button listUserButton;
     
     @FXML
+    private Button roleButton;
+    
+    @FXML
     private ChoiceBox<String> roleChoice;
+    
+    @FXML
+    private ChoiceBox<String> removeOrAddRole;
+    
+    @FXML
+    private ChoiceBox<String> userSelectRole;
     
     private UserService userService; // Reference to the user service
     
     private User currentUser;
     
     private List<User> UserList;
+    
+    private Boolean setRoleType;
     
     
     public AdminController() {
@@ -152,9 +163,29 @@ public class AdminController {
     private void handleManageRoles() {			// Function used for the "Manage Roles" button
     	//TO-DO
     	roleChoice.getItems().clear();
-    	roleChoice.setVisible(true); //Remove inviteLabel and show roleChoice
+    	removeOrAddRole.getItems().clear();
+    	userSelectRole.getItems().clear();
+    	if(roleChoice.isVisible() == true || userSelectRole.isVisible() || removeOrAddRole.isVisible()) {
+    		roleChoice.setVisible(false);
+    		roleButton.setText("Select Roles");
+    	} else {
+    		userSelectRole.setVisible(true);
+    		roleButton.setText("Hide Role Select");
+    	}
+    	userSelectRole.getItems().addAll(userService.getUsers().stream().map(User::getUsername).collect(Collectors.toList()));
+    	/**
+    	 * Bit of a longer explanation for the line above, starts with getItems(), this grabs the items for the listView.
+    	 * addAll just adds the list of info in the ()
+    	 * userService.getUsers() grabs all the users in a list of object user
+    	 * .stream allows you to do operations with getUsers from before. .map(User::getUsername) uses the User function getUsername
+    	 * to get the Username of each User object in the original list, .collect is a method in stream which uses Collectors.toList()
+    	 * to input each Username from each user object into a complete list of strings. Hope this helps!
+    	 */
+    	
     	inviteCodeLabel.setVisible(false);
     	roleChoice.getItems().addAll("Admin", "Student", "Teacher");
+    	removeOrAddRole.getItems().addAll("Add", "Remove");
+    	if(roleChoice.isVisible()) {
     		roleChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
     			if(!currentUser.hasRole(new Role(newValue))){ //Looks at the ChoiceBox and checks the current value against the newValue
     				roleLabel.setVisible(true); //Sets the roleLabel to visible and adds text to it for selected role
@@ -165,6 +196,25 @@ public class AdminController {
     				roleLabel.setText("User already has that role!");
     			}
     		});
+    	} else if(userSelectRole.isVisible()) {
+    		userSelectRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    			currentUser = userService.findUserByUsername(newValue);
+    			userSelectRole.setVisible(false);
+    			removeOrAddRole.setVisible(true);
+    		});
+    	} else if(removeOrAddRole.isVisible()) {
+    		removeOrAddRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    			if(newValue == "Remove") {
+    				setRoleType = false;
+    				roleChoice.setVisible(true);
+    				removeOrAddRole.setVisible(false);
+    			} else if(newValue == "Add"){
+    				setRoleType = true;
+    				roleChoice.setVisible(true);
+    				removeOrAddRole.setVisible(false);
+    			}
+    		});
+    	}
     	roleLabel.setVisible(false);
     }
     

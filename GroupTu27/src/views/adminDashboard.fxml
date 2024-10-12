@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="240.0" prefWidth="521.0" spacing="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+<VBox alignment="CENTER" prefHeight="240.0" prefWidth="521.0" spacing="10" style="-fx-background-color: lightgray;" stylesheets="@admin.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
     <Label text="Admin Dashboard">
       <font>
          <Font name="System Bold" size="24.0" />
@@ -39,22 +39,24 @@
           <Button onAction="#handleResetUserAccount" text="Reset User Account" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
           <Button onAction="#handleDeleteUserAccount" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
           <Button fx:id="listUserButton" onAction="#handleListUserAccounts" text="List User Accounts" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-          <Button onAction="#handleManageRoles" text="Add/Remove Roles" GridPane.halignment="CENTER" />
+          <Button fx:id="roleButton" onAction="#handleManageRoles" text="Select Roles" GridPane.halignment="CENTER" />
      	  <Label fx:id="inviteCodeLabel" text="blahblah" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
             <GridPane.margin>
                <Insets />
             </GridPane.margin></Label>
-         <ChoiceBox fx:id="roleChoice" prefWidth="100.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-            <GridPane.margin>
-               <Insets />
-            </GridPane.margin>
-         </ChoiceBox>
          <Label fx:id="roleLabel" text="Choosing role..." visible="false" GridPane.halignment="CENTER" GridPane.valignment="TOP">
             <GridPane.margin>
                <Insets top="-20.0" />
             </GridPane.margin>
          </Label>
-         <ListView fx:id="userListView" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+         <ListView fx:id="userListView" stylesheets="@admin.css" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+         <ChoiceBox fx:id="removeOrAddRole" prefWidth="100.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+         <ChoiceBox fx:id="userSelectRole" prefWidth="100.0" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+         <ChoiceBox fx:id="roleChoice" prefWidth="100.0" stylesheets="@admin.css" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <GridPane.margin>
+               <Insets />
+            </GridPane.margin>
+         </ChoiceBox>
           
       </children>
       <VBox.margin>
