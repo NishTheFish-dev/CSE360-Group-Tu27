@@ -15,6 +15,7 @@ public class UserService {
     private static UserService instance;
     private List<User> users;
     private List<String> codes;
+    private User currentUser;
     //private String curCode;
 
     private UserService() {
@@ -34,6 +35,14 @@ public class UserService {
         return instance;
     }
 
+    public void saveUser(User user) {
+    	currentUser = user;
+    }
+    
+    public User getCurrent() {
+    	return currentUser;
+    }
+    
     public List<User> getUsers() {
         return users;	// Get the user list
     }

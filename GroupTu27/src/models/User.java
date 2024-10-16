@@ -30,7 +30,7 @@ public class User {
         this.roles = new ArrayList<>();
         this.isAccountSetupComplete = false;
     }
-
+    
     // Getters and Setters for user data
     public String getUsername() {
         return username;	// Get username

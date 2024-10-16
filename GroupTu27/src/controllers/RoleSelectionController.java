@@ -9,8 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import models.User;
+import models.UserService;
 import models.Role;
 
 import java.io.IOException;
@@ -18,17 +20,23 @@ import java.io.IOException;
 public class RoleSelectionController {
 
     @FXML
-    private ListView<String> roleListView;
+    private ChoiceBox<String> roleListView;
 
     private User currentUser;
+    
     private ObservableList<String> roles;
+    
+    private UserService userService; // Reference to the user service
 
     public RoleSelectionController() {
+    	this.userService = UserService.getInstance();
+    	this.currentUser = userService.getCurrent();
         // Default constructor
     }
 
     @FXML
     public void initialize() {
+    	System.out.println(currentUser);
         // This method is called after the FXML file is loaded
     }
 

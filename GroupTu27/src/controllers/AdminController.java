@@ -165,11 +165,15 @@ public class AdminController {
     	roleChoice.getItems().clear();
     	removeOrAddRole.getItems().clear();
     	userSelectRole.getItems().clear();
-    	if(roleChoice.isVisible() == true || userSelectRole.isVisible() || removeOrAddRole.isVisible()) {
+    	if(roleChoice.isVisible() == true || userSelectRole.isVisible() == true || removeOrAddRole.isVisible() == true) {
     		roleChoice.setVisible(false);
+    		userSelectRole.setVisible(false);
+    		removeOrAddRole.setVisible(false);
     		roleButton.setText("Select Roles");
-    	} else {
+    	} else if(roleChoice.isVisible() == false && userSelectRole.isVisible() == false && removeOrAddRole.isVisible() == false){
     		userSelectRole.setVisible(true);
+    		roleChoice.setVisible(false);
+    		removeOrAddRole.setVisible(false);
     		roleButton.setText("Hide Role Select");
     	}
     	userSelectRole.getItems().addAll(userService.getUsers().stream().map(User::getUsername).collect(Collectors.toList()));
@@ -183,38 +187,52 @@ public class AdminController {
     	 */
     	
     	inviteCodeLabel.setVisible(false);
-    	roleChoice.getItems().addAll("Admin", "Student", "Teacher");
     	removeOrAddRole.getItems().addAll("Add", "Remove");
-    	if(roleChoice.isVisible()) {
-    		roleChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    	roleChoice.getItems().addAll("Admin", "Student", "Teacher");
+     	userSelectRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+     		currentUser = userService.findUserByUsername(newValue);
+     		userSelectRole.setVisible(false);
+     		removeOrAddRole.setVisible(true);
+     		});
+     	
+    	removeOrAddRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    		System.out.println(newValue);
+    		if(newValue.equals("Remove")) {
+    			setRoleType = false;
+    			removeOrAddRole.setVisible(false);
+    			roleChoice.setVisible(true);
+    			
+    		} else if(newValue.equals("Add")){
+    			setRoleType = true;
+    			removeOrAddRole.setVisible(false);
+    			roleChoice.setVisible(true);
+    			
+    		}
+    	});
+    	
+    	roleChoice.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    		if(setRoleType == false) {
+    			if(currentUser.hasRole(new Role(newValue))){ //Looks at the ChoiceBox and checks the current value against the newValue
+        			roleLabel.setVisible(true); //Sets the roleLabel to visible and adds text to it for selected role
+        			roleLabel.setText("Removed: " + newValue);
+        			currentUser.removeRole(new Role(newValue)); //Gives Current User selected role in the choiceBox
+        			System.out.println(currentUser.getRoles());
+        		} else {
+        			roleLabel.setVisible(true); //Sets the label to tell admin that user already has selected role
+        			roleLabel.setText("User doesn't have that role!");
+        		}
+    		} else if(setRoleType == true) {
     			if(!currentUser.hasRole(new Role(newValue))){ //Looks at the ChoiceBox and checks the current value against the newValue
-    				roleLabel.setVisible(true); //Sets the roleLabel to visible and adds text to it for selected role
-    				roleLabel.setText("Selected: " + newValue);
-    				currentUser.addRole(new Role(newValue)); //Gives Current User selected role in the choiceBox
-    			} else {
-    				roleLabel.setVisible(true); //Sets the label to tell admin that user already has selected role
-    				roleLabel.setText("User already has that role!");
-    			}
-    		});
-    	} else if(userSelectRole.isVisible()) {
-    		userSelectRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-    			currentUser = userService.findUserByUsername(newValue);
-    			userSelectRole.setVisible(false);
-    			removeOrAddRole.setVisible(true);
-    		});
-    	} else if(removeOrAddRole.isVisible()) {
-    		removeOrAddRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-    			if(newValue == "Remove") {
-    				setRoleType = false;
-    				roleChoice.setVisible(true);
-    				removeOrAddRole.setVisible(false);
-    			} else if(newValue == "Add"){
-    				setRoleType = true;
-    				roleChoice.setVisible(true);
-    				removeOrAddRole.setVisible(false);
-    			}
-    		});
-    	}
+        			roleLabel.setVisible(true); //Sets the roleLabel to visible and adds text to it for selected role
+        			roleLabel.setText("Selected: " + newValue);
+        			currentUser.addRole(new Role(newValue)); //Gives Current User selected role in the choiceBox
+        			System.out.println(currentUser.getRoles());
+        		} else {
+        			roleLabel.setVisible(true); //Sets the label to tell admin that user already has selected role
+        			roleLabel.setText("User already has that role!");
+        		}
+    		}
+    	}); 
     	roleLabel.setVisible(false);
     }
     
