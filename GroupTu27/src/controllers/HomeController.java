@@ -1,0 +1,47 @@
+package controllers;
+import java.util.Random;
+import java.util.stream.Collectors;
+import models.User;
+import models.UserService;
+import models.InvitationCode;
+import models.Role;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
+
+
+
+public class HomeController {
+	
+
+	private User currentUser;
+
+	private UserService userService;
+	
+	public HomeController() {
+    	this.userService = UserService.getInstance(); // Get the singleton instance of UserService
+    }
+
+    @FXML
+    private void initialize() {
+        //updateUserList();
+    	currentUser = userService.getCurrent();
+    	System.out.println(currentUser.getUsername());
+    	System.out.println(currentUser.getRoles());
+    }
+	
+}

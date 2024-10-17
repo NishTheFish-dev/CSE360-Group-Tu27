@@ -20,7 +20,7 @@ import java.io.IOException;
 public class RoleSelectionController {
 
     @FXML
-    private ChoiceBox<String> roleListView;
+    private ListView<String> roleListView;
 
     private User currentUser;
     
@@ -36,7 +36,8 @@ public class RoleSelectionController {
 
     @FXML
     public void initialize() {
-    	System.out.println(currentUser);
+    	System.out.println(currentUser.getRoles());
+    	setUser(currentUser);
         // This method is called after the FXML file is loaded
     }
 

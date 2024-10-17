@@ -11,10 +11,10 @@
 <GridPane alignment="CENTER" hgap="10" prefHeight="283.0" prefWidth="314.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="controllers.RoleSelectionController">
 
     <!-- Title -->
-    <Label text="Select a Page to Visit" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+    <Label text="Select a Role to Login As:" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
 
     <!-- List of Roles -->
-    <ChoiceBox fx:id="roleListView" prefHeight="177.0" prefWidth="83.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+    <ListView fx:id="roleListView" prefHeight="177.0" prefWidth="83.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
 
     <!-- Select Button -->
     <Button onAction="#onSelectRole" text="Select Role" GridPane.columnIndex="0" GridPane.rowIndex="2" />
