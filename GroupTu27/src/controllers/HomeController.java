@@ -32,6 +32,9 @@ public class HomeController {
 
 	private UserService userService;
 	
+	@FXML
+	private Label welcomeLabel;
+	
 	public HomeController() {
     	this.userService = UserService.getInstance(); // Get the singleton instance of UserService
     }
@@ -42,6 +45,31 @@ public class HomeController {
     	currentUser = userService.getCurrent();
     	System.out.println(currentUser.getUsername());
     	System.out.println(currentUser.getRoles());
+    }
+    
+    @FXML
+    private void handleLogout() {
+    	try {
+            // Load the login FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));
+            Parent root = loader.load();
+
+
+            // Get the current stage (from any component within the scene, e.g., usernameField)
+            Stage stage = (Stage) welcomeLabel.getScene().getWindow();
+
+            // Set the new scene for the stage (the login scene)
+            stage.setScene(new Scene(root));
+
+            // Optionally, reset the stage title if needed
+            stage.setTitle("Login");
+
+            // Show the new login page
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 	
 }
