@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
@@ -50,6 +51,18 @@ public class AdminController {
     private Button listUserButton;
     
     @FXML
+    private Button resetUser;
+    
+    @FXML
+    private Button InviteUser;
+    
+    @FXML
+    private Button deleteButton;
+    
+    @FXML
+    private Button confirmButton;
+    
+    @FXML
     private Button roleButton;
     
     @FXML
@@ -69,6 +82,7 @@ public class AdminController {
     
     private Boolean setRoleType;
     
+    private User tempUser;
     
     public AdminController() {
     	this.userService = UserService.getInstance(); // Get the singleton instance of UserService
@@ -124,7 +138,7 @@ public class AdminController {
     
     // This function will open the page used for resetting user accounts
     @FXML
-    private void handleResetUserAccount() {		// Function used for the "Reset User Account" button
+    private void handleResetPassword() {		// Function used for the "Reset User Account" button
     	//TO-DO
     }
     
@@ -132,6 +146,29 @@ public class AdminController {
     @FXML
     private void handleDeleteUserAccount() {	// Function used for the "Delete User Account" button
     	//TO-DO
+    	
+    	inviteCodeLabel.setVisible(false);
+    	List<String> userNames = new ArrayList<>();
+    	userNames = userService.getUsers().stream().map(User::getUsername).collect(Collectors.toList());
+    	ObservableList<String> users = FXCollections.observableArrayList(userNames);
+    	System.out.println(userNames);
+    	System.out.println(users);
+    	userListView.setItems(users);
+    	userListView.setVisible(true);
+    	deleteButton.setVisible(false);
+    	confirmButton.setVisible(true);
+    	showAlert("How to Delete", "Please select an account and click confirm delete.");
+    	
+    }
+    @FXML
+    private void deleteUser() {
+    	tempUser = userService.findUserByUsername(userListView.getSelectionModel().getSelectedItem());
+    	System.out.println(tempUser);
+    	userService.removeUser(tempUser);
+		System.out.println(userService.getUsers());
+		userListView.setVisible(false);
+		confirmButton.setVisible(false);
+		deleteButton.setVisible(true);
     }
     
     // This function will open the page used for listing all users
@@ -271,6 +308,14 @@ public class AdminController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 

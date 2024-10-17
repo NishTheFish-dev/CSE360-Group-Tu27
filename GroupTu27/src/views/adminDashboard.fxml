@@ -35,9 +35,9 @@
      </rowConstraints>
       <children>
       
-          <Button onAction="#handleInviteUser" text="Invite User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-          <Button onAction="#handleResetUserAccount" text="Reset User Account" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-          <Button onAction="#handleDeleteUserAccount" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+          <Button fx:id="InviteUser" onAction="#handleInviteUser" text="Invite User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+          <Button fx:id="ResetAccount" onAction="#handleResetPassword" text="Reset Password" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+          <Button fx:id="deleteButton" onAction="#handleDeleteUserAccount" text="Delete User" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
           <Button fx:id="listUserButton" onAction="#handleListUserAccounts" text="List User Accounts" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
           <Button fx:id="roleButton" onAction="#handleManageRoles" text="Select Roles" GridPane.halignment="CENTER" />
      	  <Label fx:id="inviteCodeLabel" text="blahblah" visible="false" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
@@ -57,6 +57,7 @@
                <Insets />
             </GridPane.margin>
          </ChoiceBox>
+         <Button fx:id="confirmButton" onAction="#deleteUser" mnemonicParsing="false" text="Confirm Deletion" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
           
       </children>
       <VBox.margin>

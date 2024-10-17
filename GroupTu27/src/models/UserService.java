@@ -16,6 +16,7 @@ public class UserService {
     private List<User> users;
     private List<String> codes;
     private User currentUser;
+    private int currentIndex;
     //private String curCode;
 
     private UserService() {
@@ -37,8 +38,17 @@ public class UserService {
 
     public void saveUser(User user) {
     	currentUser = user;
+    	
     }
-    
+
+    public void removeUser(User user) {
+    	User tempUser = user;
+    	for(int i = 0; i < users.size(); i++) {
+    		if(users.get(i).getEmail() == tempUser.getEmail() && users.get(i).getUsername() == tempUser.getUsername() && users.get(i).getPassword() == tempUser.getPassword()) {
+    			users.remove(i);
+    		}
+    	}
+    }
     public User getCurrent() {
     	return currentUser;
     }
