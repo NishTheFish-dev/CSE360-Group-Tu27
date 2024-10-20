@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  * and choose roles. Admin role allows multiple privileges, mainly invitation of other users.
  * All other roles are currently unable to do anything besides logout.
  * 
- * @version 0.7.4
+ * @version 1.2.0
  **/
 
 public class Main extends Application {
