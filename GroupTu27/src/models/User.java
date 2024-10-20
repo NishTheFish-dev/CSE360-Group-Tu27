@@ -22,6 +22,7 @@ public class User {
     private String preferredFirstName;
     private List<Role> roles;
     private boolean isAccountSetupComplete;
+    private PasswordReset passwordReset;
    
     // This compiles the user details needed for logging in
     public User(String username, String password) {
@@ -29,6 +30,7 @@ public class User {
         this.password = password;
         this.roles = new ArrayList<>();
         this.isAccountSetupComplete = false;
+        
     }
     
     // Getters and Setters for user data
@@ -94,6 +96,23 @@ public class User {
 
     public void setAccountSetupComplete(boolean accountSetupComplete) {
         isAccountSetupComplete = accountSetupComplete;	// Set whether or not account is set up
+    }
+    
+    public PasswordReset getPasswordReset() {
+        return passwordReset;
+    }
+
+    public void setPasswordReset(PasswordReset passwordReset) {
+        this.passwordReset = passwordReset;
+    }
+
+    public boolean isPasswordResetValid() {
+        return passwordReset != null && passwordReset.isValidForUse();
+    }
+
+    public void resetPassword(String newPassword) {
+        this.password = newPassword;
+        passwordReset.setUsed(true); // Mark the one-time password as used
     }
  
     

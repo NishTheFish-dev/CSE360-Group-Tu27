@@ -3,42 +3,38 @@ package models;
 import java.time.LocalDateTime;
 
 /**
- * 
- * The password resetting and the information attached are all handled here
- * 
- * The handled variables are the new, one-time password, expiration, and whether or not the code has already been used
- * 
- **/
-
+* The password resetting and the information attached are all handled here
+* The handled variables are the new, one-time password, expiration, and whether or not the code has already been used
+**/
 public class PasswordReset {
     private String oneTimePassword;
     private LocalDateTime expirationTime;
     private boolean used;
 
-    // The entire password reset, consisting of a one-time password, expiration, and the used tracker
+    // Constructor for Password Reset
     public PasswordReset(String oneTimePassword, LocalDateTime expirationTime) {
         this.oneTimePassword = oneTimePassword;
         this.expirationTime = expirationTime;
-        this.used = false;
+        this.used = false; // Initially, the password is unused
     }
 
     // Getters and Setters
     public String getOneTimePassword() {
-        return oneTimePassword;	// Get the password
+        return oneTimePassword;
     }
 
     public void setOneTimePassword(String oneTimePassword) {
-        this.oneTimePassword = oneTimePassword;	// Set the password
+        this.oneTimePassword = oneTimePassword;
     }
 
     public LocalDateTime getExpirationTime() {
-        return expirationTime;	// Get the expiration
+        return expirationTime;
     }
 
     public void setExpirationTime(LocalDateTime expirationTime) {
-        this.expirationTime = expirationTime;	// Set the expiration
+        this.expirationTime = expirationTime;
     }
-   
+
     // Tracking whether or not the one-time password is expired
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(expirationTime);
@@ -48,14 +44,14 @@ public class PasswordReset {
     public boolean isUsed() {
         return used;
     }
-    
-    // This changes a password from "not-used" to "used"
+
+    // Mark the password as used
     public void setUsed(boolean used) {
         this.used = used;
     }
 
-    // Checking if a password is valid
+    // Check if the password can still be used (i.e., not expired and not used)
     public boolean isValidForUse() {
-        return !isExpired() && !isUsed(); // Is the password expired or used?
+        return !isExpired() && !isUsed();
     }
 }

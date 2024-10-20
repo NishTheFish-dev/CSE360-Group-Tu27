@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 import models.User;
 import models.UserService;
 import models.InvitationCode;
+import models.PasswordReset;
 import models.Role;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -138,9 +139,40 @@ public class AdminController {
     
     // This function will open the page used for resetting user accounts
     @FXML
-    private void handleResetPassword() {		// Function used for the "Reset User Account" button
-    	//TO-DO
+    private void handleResetPassword() {
+        // Find the user to reset the password
+        User selectedUser = userService.findUserByUsername(userListView.getSelectionModel().getSelectedItem());
+
+        if (selectedUser == null) {
+            showAlert("Error", "Please select a valid user to reset the password.");
+            return;
+        }
+
+        // Generate a one-time password
+        String oneTimePassword = generateOneTimePassword();
+
+        // Set expiration time to 24 hours from now
+        LocalDateTime expirationTime = LocalDateTime.now().plusHours(24);
+
+        // Create a new PasswordReset object for the user
+        PasswordReset passwordReset = new PasswordReset(oneTimePassword, expirationTime);
+        userService.setPasswordReset(selectedUser, passwordReset);
+
+        // Inform the admin of the one-time password
+        showAlert("Password Reset", "One-time password for user " + selectedUser.getUsername() + ": " + oneTimePassword);
     }
+
+    // Generate a random one-time password (can be improved as needed)
+    private String generateOneTimePassword() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder password = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            password.append(characters.charAt(random.nextInt(characters.length())));
+        }
+        return password.toString();
+    }
+
     
     // This function will open the page used for deleting user accounts
     @FXML
@@ -284,6 +316,8 @@ public class AdminController {
         }
         return code.toString();  // Ideally this would generate a random code
     }
+    
+    
     
     @FXML
     private void handleLogout() {

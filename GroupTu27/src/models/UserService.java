@@ -67,6 +67,10 @@ public class UserService {
     public String getCode() {
     	return codes.get(0);
     }
+    
+    public void setPasswordReset(User user, PasswordReset passwordReset) {
+        user.setPasswordReset(passwordReset);
+    }
 
     // This function finds a user by username 
     public User findUserByUsername(String username) {

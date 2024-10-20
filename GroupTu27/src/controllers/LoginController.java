@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -77,13 +78,29 @@ public class LoginController {
             if (!user.isAccountSetupComplete()) {
                 loadSetupAccountPage(user);
             } else {
-                navigateToHomePage(user);
+                loadHomePage(user);
             }
         } else {
             errorMessageLabel.setText("Invalid username or password.");
         }
         
+        if (user != null) {
+            // Check if the one-time password is valid
+            if (user.isPasswordResetValid() && password.equals(user.getPasswordReset().getOneTimePassword())) {
+                // Redirect to a page to set a new password
+                loadResetPasswordPage(user);
+            } else if (user.getPassword().equals(password)) {
+                // Normal login flow
+                loadHomePage(user);
+            } else {
+                errorMessageLabel.setText("Invalid username or password.");
+            }
+        } else {
+            errorMessageLabel.setText("User not found.");
+        }
+        
     }
+    
 
     private boolean validateAdminCreation(String username, String password) {
         String confirmPassword = confirmPasswordField.getText();  // Confirm password field is filled out one time
@@ -144,7 +161,7 @@ public class LoginController {
     }
 
 	// If all goes well with logging in, this takes us to the home page
-    private void navigateToHomePage(User user) {
+    private void loadHomePage(User user) {
         try {
             if (user.getRoles().size() == 1) {	// In the case somebody has more than 1 role, they need to decide which home page to navigate to
                 loadRoleHomePage(user, user.getRoles().get(0));	// With only 1 role, find and load into the correct home page
@@ -168,24 +185,46 @@ public class LoginController {
 	// In the case somebody has been assigned more than 1 role, this allows them to choose which home page to navigate to
     private void loadRoleHomePage(User user, Role role) {
         try {
-        	if (user.hasRole(new Role("Admin"))) {
-        		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/adminDashboard.fxml" ));	// Loading GUI settings for the appropriate home page
-                Parent root = loader.load();
-                
-                Stage stage = (Stage) usernameField.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show();	// Show the loaded scene
-        	} else if(user.hasRole(new Role("Student"))) {
-        		FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/home.fxml" ));	// Loading GUI settings for the appropriate home page
-                Parent root = loader.load();
-                
-                Stage stage = (Stage) usernameField.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show();	// Show the loaded scene
-        	}
-        	
+            FXMLLoader loader;
+            Parent root;
+
+            // Determine the correct home page based on the user's role
+            if (role.getRoleName().equals("Admin")) {
+                loader = new FXMLLoader(getClass().getResource("/views/adminDashboard.fxml"));
+            } else if (role.getRoleName().equals("Student")) {
+                loader = new FXMLLoader(getClass().getResource("/views/home.fxml"));
+            } else {
+                throw new IllegalArgumentException("Invalid role: " + role.getRoleName());
+            }
+
+            root = loader.load();
+            
+            // Get the current stage from any component
+            Stage stage = (Stage) usernameField.getScene().getWindow(); // Use any active element from the scene to get the stage
+
+            // Set the new scene
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void loadResetPasswordPage(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/resetPassword.fxml"));
+            Parent root = loader.load();
+
+            ResetPasswordController controller = loader.getController();
+            controller.setUser(user);
+
+            Stage stage = (Stage) usernameField.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+    

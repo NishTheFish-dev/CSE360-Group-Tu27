@@ -43,8 +43,8 @@ public class HomeController {
     private void initialize() {
         //updateUserList();
     	currentUser = userService.getCurrent();
-    	System.out.println(currentUser.getUsername());
-    	System.out.println(currentUser.getRoles());
+    	//System.out.println(currentUser.getUsername());
+    	//System.out.println(currentUser.getRoles());
     }
     
     @FXML
