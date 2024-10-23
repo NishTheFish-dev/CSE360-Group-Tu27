@@ -2,7 +2,7 @@ package controllers;
 import java.util.Random;
 import java.util.stream.Collectors;
 import models.User;
-import models.UserService;
+import services.UserService;
 import models.InvitationCode;
 import models.PasswordReset;
 import models.Role;

@@ -1,7 +1,10 @@
-package models;
+package services;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import models.PasswordReset;
+import models.User;
 
 /**
  * 

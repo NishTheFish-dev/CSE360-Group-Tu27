@@ -12,7 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import models.User;
-import models.UserService;
+import services.UserService;
 import models.Role;
 
 import java.io.IOException;
