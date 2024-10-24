@@ -1,13 +1,13 @@
 # CSE360-Group-Tu27
 Group Tuesday 27's Project Github Repository
 
-To-do:
+##To-do:
 - Improved/Nicer homepage once role is selected and logged in
 - Helper functions for maintaining help articles, to be managed by Admins/Instructors
 - Adding Database functionalities for Admins and Instructors
 
 
-Recent Updates:
+##Recent Updates:
 - 1.5.0:
   - Added new user library dependency, H2
   - Added two new packages, services and database
