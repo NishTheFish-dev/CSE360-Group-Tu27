@@ -1,8 +1,10 @@
 package services;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.DatabaseHelper;
 import models.PasswordReset;
 import models.User;
 
@@ -21,22 +23,24 @@ public class UserService {
     private User currentUser;
     private int currentIndex;
     //private String curCode;
+    private final DatabaseHelper dbHelper;
 
-    private UserService() {
-        this.users = new ArrayList<>(); // Initialize with an empty list of users
-        this.codes = new ArrayList<>();
-        
+    public UserService() throws SQLException {
+        this.dbHelper = new DatabaseHelper();
+        this.users = dbHelper.getAllUsers(); // Load users from database
+    }
+
+    public void addUser(User user) throws SQLException {
+        users.add(user);
+        dbHelper.insertUser(user); // Save new user to database
+    }
+
+    public List<User> getUsers() {
+        return users;
     }
     
     public void clearCode() {
     	codes.clear();
-    }
-    
-    public static UserService getInstance() {
-        if (instance == null) {
-            instance = new UserService();	// Start a new instance for the list of users
-        }
-        return instance;
     }
 
     public void saveUser(User user) {
@@ -54,14 +58,6 @@ public class UserService {
     }
     public User getCurrent() {
     	return currentUser;
-    }
-    
-    public List<User> getUsers() {
-        return users;	// Get the user list
-    }
-
-    public void addUser(User user) {
-        users.add(user);	// Add a user to the list
     }
     
     public void addCode(String code) {

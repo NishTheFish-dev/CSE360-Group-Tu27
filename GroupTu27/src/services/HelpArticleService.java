@@ -10,12 +10,17 @@ import java.sql.Statement;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import database.DatabaseHelper;
+
 
 public class HelpArticleService {
     private static HelpArticleService instance;
-    private List<HelpArticle> articles; // Store articles
+    
     static final String JDBC_DRIVER = "org.h2.Driver";   
 	static final String DB_URL = "jdbc:h2:~/360projectDB";  
+	
+	private final DatabaseHelper dbHelper;
+    private List<HelpArticle> articles;
 
 	//  Database credentials 
 	static final String USER = "sa"; 
@@ -25,19 +30,25 @@ public class HelpArticleService {
 	private Statement statement = null; 
 	//	PreparedStatement pstmt
 	
-    private HelpArticleService() {
-        this.articles = new ArrayList<>();
+	public HelpArticleService() throws SQLException {
+        this.dbHelper = new DatabaseHelper();
+        this.articles = dbHelper.getAllHelpArticles(); // Load articles from database
     }
 
-    public static HelpArticleService getInstance() {
+    public void addArticle(HelpArticle article) throws SQLException {
+        articles.add(article);
+        dbHelper.insertHelpArticle(article); // Save new article to database
+    }
+
+    public List<HelpArticle> getAllArticles() {
+        return articles;
+    }
+
+    public static HelpArticleService getInstance() throws SQLException {
         if (instance == null) {
             instance = new HelpArticleService();
         }
         return instance;
-    }
-
-    public void addArticle(HelpArticle article) {
-        articles.add(article);
     }
 
     public void removeArticle(HelpArticle article) {
@@ -94,7 +105,4 @@ public class HelpArticleService {
         }
     }
 
-    public List<HelpArticle> getAllArticles() {
-        return articles;
-    }
 }

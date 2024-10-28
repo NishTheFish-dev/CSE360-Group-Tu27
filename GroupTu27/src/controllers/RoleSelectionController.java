@@ -16,6 +16,7 @@ import services.UserService;
 import models.Role;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class RoleSelectionController {
 
@@ -28,8 +29,8 @@ public class RoleSelectionController {
     
     private UserService userService; // Reference to the user service
 
-    public RoleSelectionController() {
-    	this.userService = UserService.getInstance();
+    public RoleSelectionController() throws SQLException {
+    	this.userService = new UserService();
     	this.currentUser = userService.getCurrent();
         // Default constructor
     }

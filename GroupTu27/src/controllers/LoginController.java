@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -44,14 +45,14 @@ public class LoginController {
     private UserService userService; // Reference to the user service
     
     //Default Constructor
-    public LoginController() {
-        this.userService = UserService.getInstance(); // Get the singleton instance of UserService
+    public LoginController() throws SQLException {
+    	this.userService = new UserService(); // Get the singleton instance of UserService
     }
     
 
     // This function takes the information input to check for valid login
     @FXML
-    private void handleLogin() {
+    private void handleLogin() throws SQLException {
         String username = usernameField.getText();
         String password = passwordField.getText();
         
@@ -116,7 +117,7 @@ public class LoginController {
 
     
     // This function compares the invitation code to find appropriate account
-    public void handleInvitationCode() {
+    public void handleInvitationCode() throws SQLException {
     	String username = usernameField.getText();
         String password = passwordField.getText();
         String confirmPass = confirmPasswordField.getText();

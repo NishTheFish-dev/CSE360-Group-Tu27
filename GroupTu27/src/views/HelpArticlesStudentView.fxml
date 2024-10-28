@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="10" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="controllers.HelpArticlesStudentViewController">
+    
+    <Label text="Help Articles">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+
+    <Label text="Select an article to view details:" style="-fx-font-size: 14.0;" />
+    
+    <!-- List of Articles -->
+    <ListView fx:id="articleListView" prefHeight="200.0" onMouseClicked="#handleViewArticle" />
+
+    <!-- Article Details Section (Read-only) -->
+    <Label fx:id="titleLabel" text="Title: " style="-fx-font-size: 14.0; -fx-font-weight: bold;" />
+    <TextArea fx:id="bodyTextArea" promptText="Article Body" wrapText="true" editable="false" prefHeight="150.0" />
+</VBox>

@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +37,8 @@ public class HomeController {
 	@FXML
 	private Label welcomeLabel;
 	
-	public HomeController() {
-    	this.userService = UserService.getInstance(); // Get the singleton instance of UserService
+	public HomeController() throws SQLException {
+		this.userService = new UserService(); // Get the singleton instance of UserService
     }
 
     @FXML
