@@ -3,11 +3,12 @@ Group Tuesday 27's Project Github Repository
 
 ## To-do:
 - Improved/Nicer homepage once role is selected and logged in
-- Helper functions for maintaining help articles, to be managed by Admins/Instructors
-- Adding Database functionalities for Admins and Instructors
-
+- Actually getting the database to work correctly with the existing controllers
 
 ## Recent Updates:
+- 1.9.0:
+  - Added database functionalities for Admins and Instructors
+  - Added views for both managing articles and viewing articles as a student
 - 1.5.0:
   - Added new user library dependency, H2
   - Added two new packages, services and database
