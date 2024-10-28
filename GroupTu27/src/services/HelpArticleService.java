@@ -25,38 +25,6 @@ public class HelpArticleService {
 	private Statement statement = null; 
 	//	PreparedStatement pstmt
 	
-	
-	
-	public void DatabaseHelper() throws Exception {
-		
-	}
-	
-	private void createTables() throws SQLException {
-		
-		String postTable = "CREATE TABLE IF NOT EXISTS helpArticles ("
-				+ "id BIGINT AUTO_INCREMENT PRIMARY KEY, "
-				+ "header VARCHAR(255) UNIQUE, "
-				+ "title VARCHAR(255), "
-				+ "shortDesc VARCHAR(255), "
-				+ "searchMaterial VARCHAR(255), "
-				+ "body VARCHAR(255), "
-				+ "referenceLinks VARCHAR(255), "
-				+ "otherInfo VARCHAR(255))";
-		statement.execute(postTable);
-	}
-	
-	public void connectToDatabase() throws SQLException {
-		try {
-			Class.forName(JDBC_DRIVER); // Load the JDBC driver
-			System.out.println("Connecting to database...");
-			connection = DriverManager.getConnection(DB_URL, USER, PASS);
-			statement = connection.createStatement(); 
-			createTables();  // Create the necessary tables if they don't exist
-		} catch (ClassNotFoundException e) {
-			System.err.println("JDBC Driver not found: " + e.getMessage());
-		}
-	}
-	
     private HelpArticleService() {
         this.articles = new ArrayList<>();
     }
