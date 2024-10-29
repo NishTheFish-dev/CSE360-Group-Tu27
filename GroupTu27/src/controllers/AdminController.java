@@ -211,6 +211,8 @@ public class AdminController {
     	showAlert("How to Delete", "Please select an account and click confirm delete.");
     	
     }
+    
+    //This function gathers the information needed for deleting a user and send it to handleDeleteUserAccount()
     @FXML
     private void deleteUser() {
     	tempUser = userService.findUserByUsername(userListView.getSelectionModel().getSelectedItem());
@@ -226,18 +228,20 @@ public class AdminController {
     @FXML
     private void handleListUserAccounts() {		// Function used for the "List User Accounts" button
     	//TO-DO
-    	if(userListView.isVisible() == true) {
+    	if(userListView.isVisible() == true) {	// If the list is currently visible, hide it
     		System.out.println(userListView.isVisible());
     		userListView.setVisible(false);
     		System.out.println("visible false");
     		listUserButton.setText("List User Accounts");
-    	} else if(userListView.isVisible() == false) {
+    	} else if(userListView.isVisible() == false) {	// If the list is not currently visible, show it
     		userListView.setVisible(true);
     		listUserButton.setText("Remove User List");
     		System.out.println(userListView.isVisible());
     	}
     	
-    	inviteCodeLabel.setVisible(false);
+    	inviteCodeLabel.setVisible(false);	// Hide the invite code, in case it is visible. This avoids visual collisions
+    	
+    	// These lines set up and show the list of users
     	List<String> userNames = new ArrayList<>();
     	userNames = userService.getUsers().stream().map(User::getUsername).collect(Collectors.toList());
     	ObservableList<String> users = FXCollections.observableArrayList(userNames);
@@ -250,15 +254,19 @@ public class AdminController {
     @FXML
     private void handleManageRoles() {			// Function used for the "Manage Roles" button
     	//TO-DO
+    	// Resets all relevant variables
     	roleChoice.getItems().clear();
     	removeOrAddRole.getItems().clear();
     	userSelectRole.getItems().clear();
+    	
     	if(roleChoice.isVisible() == true || userSelectRole.isVisible() == true || removeOrAddRole.isVisible() == true) {
+    		//If any of the above windows are open, hide them all.
     		roleChoice.setVisible(false);
     		userSelectRole.setVisible(false);
     		removeOrAddRole.setVisible(false);
     		roleButton.setText("Select Roles");
     	} else if(roleChoice.isVisible() == false && userSelectRole.isVisible() == false && removeOrAddRole.isVisible() == false){
+    		//If all of the above windows are closed, show userSelectRole.
     		userSelectRole.setVisible(true);
     		roleChoice.setVisible(false);
     		removeOrAddRole.setVisible(false);
@@ -275,21 +283,25 @@ public class AdminController {
     	 */
     	
     	inviteCodeLabel.setVisible(false);
-    	removeOrAddRole.getItems().addAll("Add", "Remove");
-    	roleChoice.getItems().addAll("Admin", "Student", "Teacher");
+    	removeOrAddRole.getItems().addAll("Add", "Remove");	//These are the options the user will have for the role action
+    	roleChoice.getItems().addAll("Admin", "Student", "Teacher");	//These are the options the user will have for the role selection
+    	//This shows the relevant buttons to make the choice for role
      	userSelectRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
      		currentUser = userService.findUserByUsername(newValue);
      		userSelectRole.setVisible(false);
      		removeOrAddRole.setVisible(true);
      		});
      	
+     	//This shows the relevant buttons to make the choice of removal or addition
     	removeOrAddRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
     		System.out.println(newValue);
+    		//If the user chooses remove, removes the chosen role from the target user
     		if(newValue.equals("Remove")) {
     			setRoleType = false;
     			removeOrAddRole.setVisible(false);
     			roleChoice.setVisible(true);
     			
+    		//If the user chooses add, adds the chosen role from the target user
     		} else if(newValue.equals("Add")){
     			setRoleType = true;
     			removeOrAddRole.setVisible(false);
@@ -337,7 +349,6 @@ public class AdminController {
     }
     
     
-    
     @FXML
     private void handleLogout() {
         try {
@@ -363,6 +374,11 @@ public class AdminController {
         }
     }
     
+    /**
+     * This function is the thrown visualization for when an error is caught.
+     * @param title
+     * @param content
+     */
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

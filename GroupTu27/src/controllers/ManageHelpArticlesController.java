@@ -44,6 +44,10 @@ public class ManageHelpArticlesController {
         articleListView.setItems(articles);
     }
 
+    /**
+     * This function handles adding articles to the list
+     * @throws SQLException
+     */
     @FXML
     private void handleAddArticle() throws SQLException {
         HelpArticle newArticle = new HelpArticle(
@@ -60,6 +64,9 @@ public class ManageHelpArticlesController {
         loadArticles(); // Refresh the article list
     }
 
+    /**
+     * This functions handles deleting articles from the list
+     */
     @FXML
     private void handleDeleteArticle() {
         HelpArticle selectedArticle = articleListView.getSelectionModel().getSelectedItem();
@@ -69,6 +76,9 @@ public class ManageHelpArticlesController {
         }
     }
 
+    /**
+     * This function handles backing-up the article list
+     */
     @FXML
     private void handleBackupArticles() {
         String fileName = backupFileNameField.getText();
@@ -80,6 +90,9 @@ public class ManageHelpArticlesController {
         }
     }
 
+    /**
+     * This function handles restoring a backup to the article list
+     */
     @FXML
     private void handleRestoreArticles() {
         String fileName = backupFileNameField.getText();
@@ -92,6 +105,11 @@ public class ManageHelpArticlesController {
         }
     }
 
+    /**
+     * This function is a thrown visualization of a caught error
+     * @param title
+     * @param content
+     */
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

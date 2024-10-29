@@ -135,6 +135,7 @@ public class RoleSelectionController {
         showAlert("Instructor Role", "Instructor role functionality is not yet implemented.");
     }
 
+    // This function is the visualization of the caught and thrown errors
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

@@ -20,19 +20,19 @@ public class PasswordReset {
 
     // Getters and Setters
     public String getOneTimePassword() {
-        return oneTimePassword;
+        return oneTimePassword;	// Get the one-time password
     }
 
     public void setOneTimePassword(String oneTimePassword) {
-        this.oneTimePassword = oneTimePassword;
+        this.oneTimePassword = oneTimePassword;	// Set the one-time password
     }
 
     public LocalDateTime getExpirationTime() {
-        return expirationTime;
+        return expirationTime;	// Get the expirations time
     }
 
     public void setExpirationTime(LocalDateTime expirationTime) {
-        this.expirationTime = expirationTime;
+        this.expirationTime = expirationTime;	// Set the expiration time
     }
 
     // Tracking whether or not the one-time password is expired

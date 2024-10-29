@@ -36,15 +36,15 @@ public class UserService {
     }
 
     public List<User> getUsers() {
-        return users;
+        return users;	// Return all users from the list
     }
     
     public void clearCode() {
-    	codes.clear();
+    	codes.clear();	// Clear any codes
     }
 
     public void saveUser(User user) {
-    	currentUser = user;
+    	currentUser = user;	// Save a user as the current target
     	
     }
 
@@ -52,23 +52,23 @@ public class UserService {
     	User tempUser = user;
     	for(int i = 0; i < users.size(); i++) {
     		if(users.get(i).getEmail() == tempUser.getEmail() && users.get(i).getUsername() == tempUser.getUsername() && users.get(i).getPassword() == tempUser.getPassword()) {
-    			users.remove(i);
+    			users.remove(i);	// Remove a user from the list
     		}
     	}
     }
     public User getCurrent() {
-    	return currentUser;
+    	return currentUser;	// Returns the current user
     }
     
     public void addCode(String code) {
-    	codes.add(code);
+    	codes.add(code);	// Add a new code
     }
     public String getCode() {
-    	return codes.get(0);
+    	return codes.get(0);	// Get the code
     }
     
     public void setPasswordReset(User user, PasswordReset passwordReset) {
-        user.setPasswordReset(passwordReset);
+        user.setPasswordReset(passwordReset);	// Resetting a user's password
     }
 
     // This function finds a user by username 

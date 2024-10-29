@@ -212,15 +212,20 @@ public class LoginController {
         }
     }
     
+    // This function loads the page related to resetting a password
     private void loadResetPasswordPage(User user) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/resetPassword.fxml"));
             Parent root = loader.load();
 
+            // Get the related controller for resetting passwords
             ResetPasswordController controller = loader.getController();
             controller.setUser(user);
 
+            // Get the current stage for the environment
             Stage stage = (Stage) usernameField.getScene().getWindow();
+
+            // Set the new scene
             stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {

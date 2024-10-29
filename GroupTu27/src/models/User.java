@@ -99,15 +99,15 @@ public class User {
     }
     
     public PasswordReset getPasswordReset() {
-        return passwordReset;
+        return passwordReset;	// Get whether or not a password is being reset
     }
 
     public void setPasswordReset(PasswordReset passwordReset) {
-        this.passwordReset = passwordReset;
+        this.passwordReset = passwordReset;	// Set whether or not a password is being reset
     }
 
     public boolean isPasswordResetValid() {
-        return passwordReset != null && passwordReset.isValidForUse();
+        return passwordReset != null && passwordReset.isValidForUse();	// Checking for password validity based on restrictions
     }
 
     public void resetPassword(String newPassword) {

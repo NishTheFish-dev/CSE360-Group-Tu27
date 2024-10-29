@@ -19,6 +19,7 @@ public class HelpArticlesStudentViewController {
 
     private final HelpArticleService helpArticleService;
     
+    //Default Controller
     public HelpArticlesStudentViewController() {
         HelpArticleService tempService;
         try {
@@ -30,6 +31,9 @@ public class HelpArticlesStudentViewController {
         this.helpArticleService = tempService;
     }
     
+    /**
+     * This function initializes the articles and loads them
+     */
     @FXML
     public void initialize() {
         if (helpArticleService != null) {
@@ -37,11 +41,17 @@ public class HelpArticlesStudentViewController {
         }
     }
 
+    /**
+     * This function loads all articles to the list
+     */
     private void loadArticles() {
         ObservableList<HelpArticle> articles = FXCollections.observableArrayList(helpArticleService.getAllArticles());
         articleListView.setItems(articles);
     }
 
+    /**
+     * This function handles the viewing of a specified article
+     */
     @FXML
     private void handleViewArticle() {
         HelpArticle selectedArticle = articleListView.getSelectionModel().getSelectedItem();

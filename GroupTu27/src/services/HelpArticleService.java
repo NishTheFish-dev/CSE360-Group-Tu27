@@ -41,40 +41,47 @@ public class HelpArticleService {
     }
 
     public List<HelpArticle> getAllArticles() {
-        return articles;
+        return articles;	// Returns all articles
     }
 
     public static HelpArticleService getInstance() throws SQLException {
         if (instance == null) {
             instance = new HelpArticleService();
         }
-        return instance;
+        return instance;	// Returns the current instance
     }
 
     public void removeArticle(HelpArticle article) {
-        articles.remove(article);
+        articles.remove(article);	// Remove an article
     }
 
     public void updateArticle(HelpArticle updatedArticle) {
         articles = articles.stream()
                 .map(article -> article.getId() == updatedArticle.getId() ? updatedArticle : article)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());	// Update an article with the  new article
     }
 
     public List<HelpArticle> searchArticles(String keyword) {
         return articles.stream()
                 .filter(article -> article.getKeywords().contains(keyword))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());	// Finds an article via keywords
     }
 
     public List<HelpArticle> listArticlesByGroup(String group) {
         return articles.stream()
                 .filter(article -> article.belongsToGroup(group))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // List all articles, sorted by groups
     }
-
+    
+    /**
+     * Backup all articles to external storage
+     * @param fileName
+     * @param includeGroups
+     * @param groupNames
+     * @throws IOException
+     */
     public void backupArticles(String fileName, boolean includeGroups, List<String> groupNames) throws IOException {
-        List<HelpArticle> articlesToBackup = articles;
+        List<HelpArticle> articlesToBackup = articles;	
 
         if (includeGroups && groupNames != null) {
             articlesToBackup = articles.stream()
@@ -87,8 +94,15 @@ public class HelpArticleService {
         }
     }
 
+    /**
+     * Restore the articles to the backup
+     * @param fileName
+     * @param removeExisting
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void restoreArticles(String fileName, boolean removeExisting) throws IOException, ClassNotFoundException {
-        List<HelpArticle> restoredArticles;
+        List<HelpArticle> restoredArticles;	
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             restoredArticles = (List<HelpArticle>) ois.readObject();
