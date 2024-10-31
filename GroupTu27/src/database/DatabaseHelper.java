@@ -2,12 +2,16 @@ package database;
 
 import models.HelpArticle;
 import models.User;
+import services.UserService;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper {
+
+	
+	private UserService userService;
 
 	private static final String DB_URL = "jdbc:h2:./database"; // H2 database URL
     private static final String DB_USERNAME = "sa";
@@ -46,7 +50,8 @@ public class DatabaseHelper {
                                     "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
                                     "username VARCHAR(255) UNIQUE, " +
                                     "password VARCHAR(255), " +
-                                    "role VARCHAR(50))";
+                                    "role VARCHAR(50), " +
+                                    "isAccountComplete INTEGER)";
 
         String createHelpArticleTableSQL = "CREATE TABLE IF NOT EXISTS HelpArticles (" +
                                            "id BIGINT PRIMARY KEY, " +
@@ -66,11 +71,12 @@ public class DatabaseHelper {
 
     // Insert a new user into the Users table
     public void insertUser(User user) throws SQLException {
-        String insertUserSQL = "INSERT INTO Users (username, password, role) VALUES (?, ?, ?)";
+        String insertUserSQL = "INSERT INTO Users (username, password, role, isAccountComplete) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertUserSQL)) {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
             pstmt.setString(3, user.getRoles().isEmpty() ? null : user.getRoles().get(0).getRoleName());
+            pstmt.setInt(4, 1);
             pstmt.executeUpdate();
         }
     }
@@ -91,7 +97,19 @@ public class DatabaseHelper {
             pstmt.executeUpdate();
         }
     }
-
+    
+    public void deleteUser(User user) throws SQLException {
+    	String sql = "DELETE * FROM Users WHERE username="+user.getUsername();
+    	Statement stmt = connection.createStatement();
+		stmt.executeQuery(sql); 
+    }
+    
+    public void deleteArticle(HelpArticle article) throws SQLException{
+    	String sql = "DELETE * FROM HelpArticles WHERE id="+article.getId();
+    	Statement stmt = connection.createStatement();
+    	stmt.executeQuery(sql);
+    }
+    
     // Retrieve all users from the Users table
     public List<User> getAllUsers() throws SQLException {
         String query = "SELECT * FROM Users";
@@ -101,10 +119,37 @@ public class DatabaseHelper {
             while (rs.next()) {
                 User user = new User(rs.getString("username"), rs.getString("password"));
                 user.addRole(new models.Role(rs.getString("role"))); // Assuming role is a single role for simplicity
+                user.setAccountSetupComplete(rs.getInt("isAccountComplete"));
                 users.add(user);
             }
         }
         return users;
+    }
+    
+    public User getUser(String user) throws SQLException {
+    	User tempUser = null;
+    	String sql = "SELECT * FROM Users WHERE username="+user;
+    	Statement stmt = connection.createStatement();
+    	ResultSet rs = stmt.executeQuery(sql);
+    	while(rs.next()) {
+    		String username = rs.getString("username");
+    		
+    		tempUser = userService.findUserByUsername(username);
+    		return tempUser;
+    	}
+		return tempUser;
+    	
+    }
+    
+    public int checkIfComplete(String username) throws SQLException {
+    	String sql = "SELECT isAccountComplete FROM Users WHERE username="+username;
+    	Statement stmt = connection.createStatement();
+    	ResultSet rs = stmt.executeQuery(sql);
+    	while(rs.next()) {
+    		int complete = rs.getInt("isAccountComplete");
+    		return complete;
+    	}
+    	return 0;
     }
 
     // Retrieve all help articles from the HelpArticles table

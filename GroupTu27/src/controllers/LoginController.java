@@ -78,6 +78,7 @@ public class LoginController {
         if (user != null && user.getPassword().equals(password)) {
             if (!user.isAccountSetupComplete()) {
                 loadSetupAccountPage(user);
+                System.out.println(userService.getUsers());
             } else {
                 loadHomePage(user);
             }

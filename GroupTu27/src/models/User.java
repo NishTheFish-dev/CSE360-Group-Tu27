@@ -1,7 +1,10 @@
 package models;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import database.DatabaseHelper;
 
 /**
  * 
@@ -23,9 +26,10 @@ public class User {
     private List<Role> roles;
     private boolean isAccountSetupComplete;
     private PasswordReset passwordReset;
-   
+    private final DatabaseHelper dbHelper = new DatabaseHelper();
+
     // This compiles the user details needed for logging in
-    public User(String username, String password) {
+    public User(String username, String password) throws SQLException {
         this.username = username;
         this.password = password;
         this.roles = new ArrayList<>();
@@ -94,8 +98,11 @@ public class User {
         return isAccountSetupComplete;	// Check whether or not if the account is set up
     }
 
-    public void setAccountSetupComplete(boolean accountSetupComplete) {
-        isAccountSetupComplete = accountSetupComplete;	// Set whether or not account is set up
+    public void setAccountSetupComplete(int complete) throws SQLException {
+        if(complete == 1) {
+        	isAccountSetupComplete = true;
+        }
+    	
     }
     
     public PasswordReset getPasswordReset() {

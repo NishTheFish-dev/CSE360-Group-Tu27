@@ -1,6 +1,9 @@
 package controllers;
 
 import models.User;
+
+import java.sql.SQLException;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -34,6 +37,8 @@ public class SetupAccountController {
     private TextField emailField;
 
     private User user;
+    
+    
 
     public void setUser(User user) {
         this.user = user;
@@ -41,14 +46,16 @@ public class SetupAccountController {
 
     // This function is used to handle completing account setup
     @FXML
-    private void handleCompleteAccountSetup() {
+    private void handleCompleteAccountSetup() throws SQLException {
         user.setFirstName(firstNameField.getText());	// Saving the first name from the text field
         user.setMiddleName(middleNameField.getText());	// Saving the middle name from the text field
         user.setLastName(lastNameField.getText());		// Saving the last name from the text field
         user.setPreferredFirstName(preferredFirstNameField.getText());	// Saving the preferred first name from the text field
         user.setEmail(emailField.getText());	// Saving the email from the text field
-        user.setAccountSetupComplete(true);		// Marking the account as a completed setup so this page is avoided in the future
-
+        user.setAccountSetupComplete(1);		// Marking the account as a completed setup so this page is avoided in the future
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        
         navigateToLoginPage();	// Returning to the login page to officially sign in to the new account
     }
 
