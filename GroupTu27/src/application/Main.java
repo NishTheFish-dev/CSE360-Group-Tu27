@@ -10,13 +10,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * This app is in phase 1.
+ * This app is in phase 2.
  * 
- * For phase 1, there is a simple login system to allow users to create an account
- * and choose roles. Admin role allows multiple privileges, mainly invitation of other users.
- * All other roles are currently unable to do anything besides logout.
+ * For phase 2, a database has been added to store information about users and help articles.
+ * There are also more functionalities for admin users for managing users, roles, and help articles.
+ * Instructors and Admins can manage articles, Students are able to view them.
  * 
- * @version 1.9.1
+ * @version 2.1.0
  **/
 
 public class Main extends Application {

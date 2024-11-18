@@ -11,8 +11,26 @@ public class HelpArticle {
     private String body; // Body of the article
     private List<String> references; // Links to reference materials
     private List<String> groups; // Groups the article belongs to (e.g., "Eclipse", "H2")
+    private ArticleLevel level;
+    
+    public enum ArticleLevel {
+        BEGINNER,
+        INTERMEDIATE,
+        ADVANCED,
+        EXPERT;
+        
+        /**
+         * Compares the provided string to this enum constant name, ignoring case.
+         *
+         * @param levelName The name to compare.
+         * @return True if the provided string matches this enum constant name (case-insensitive), false otherwise.
+         */
+        public boolean equalsIgnoreCase(String levelName) {
+            return this.name().equalsIgnoreCase(levelName);
+        }
+    }
 
-    public HelpArticle(long id, String header, String title, String description, List<String> keywords, String body, List<String> references, List<String> groups) {
+    public HelpArticle(long id, String header, String title, String description, List<String> keywords, String body, List<String> references, List<String> groups, ArticleLevel level) {
         this.id = id;
         this.header = header;
         this.title = title;
@@ -21,6 +39,7 @@ public class HelpArticle {
         this.body = body;
         this.references = references;
         this.groups = groups;
+        this.level = level;
     }
 
     // Getters and Setters for each field
@@ -91,5 +110,13 @@ public class HelpArticle {
     // Add method to check if the article belongs to a specific group
     public boolean belongsToGroup(String groupName) {
         return groups.contains(groupName);
+    }
+    
+    public ArticleLevel getLevel() {
+        return level;
+    }
+
+    public void setLevel(ArticleLevel level) {
+        this.level = level;
     }
 }

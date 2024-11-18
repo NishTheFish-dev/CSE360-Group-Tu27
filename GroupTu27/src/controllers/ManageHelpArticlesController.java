@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.HelpArticle;
+import models.HelpArticle.ArticleLevel;
 import services.HelpArticleService;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -50,21 +51,44 @@ public class ManageHelpArticlesController {
      */
     @FXML
     private void handleAddArticle() throws SQLException {
-        HelpArticle newArticle = new HelpArticle(
-                System.currentTimeMillis(),
-                headerField.getText(),
-                titleField.getText(),
-                descriptionField.getText(),
-                Arrays.asList(keywordsField.getText().split(",")),
-                bodyField.getText(),
-                Arrays.asList(referencesField.getText().split(",")),
-                Arrays.asList(groupsField.getText().split(","))
-        );
-        helpArticleService.addArticle(newArticle);
-        loadArticles(); // Refresh the article list
+        try {
+            // Parse the selected level from the choice box
+            ArticleLevel selectedLevel = ArticleLevel.valueOf(levelChoiceBox.getValue().toUpperCase());
+
+            // Create a new HelpArticle object with the updated constructor
+            HelpArticle newArticle = new HelpArticle(
+                    System.currentTimeMillis(),
+                    headerField.getText(),
+                    titleField.getText(),
+                    descriptionField.getText(),
+                    Arrays.asList(keywordsField.getText().split(",")), // Split keywords into a list
+                    bodyField.getText(),
+                    Arrays.asList(referencesField.getText().split(",")), // Split references into a list
+                    Arrays.asList(groupsField.getText().split(",")), // Split groups into a list
+                    selectedLevel // Set the selected level
+            );
+
+            // Add the article using the service
+            helpArticleService.addArticle(newArticle);
+
+            // Refresh the article list
+            loadArticles();
+        } catch (IllegalArgumentException e) {
+            // Handle invalid ArticleLevel
+            showError("Invalid level selected. Please choose a valid article level.");
+        } catch (SQLException e) {
+            // Handle SQL errors
+            showError("An error occurred while adding the article. Please try again.");
+            e.printStackTrace();
+        }
     }
 
-    /**
+
+    private void showError(String string) {
+		// TODO Auto-generated method stub		
+	}
+
+	/**
      * This functions handles deleting articles from the list
      */
     @FXML

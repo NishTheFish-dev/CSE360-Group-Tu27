@@ -1,6 +1,7 @@
 package database;
 
 import models.HelpArticle;
+import models.HelpArticle.ArticleLevel;
 import models.User;
 import services.UserService;
 
@@ -61,7 +62,8 @@ public class DatabaseHelper {
                                            "keywords VARCHAR(255), " +
                                            "body TEXT, " +
                                            "references VARCHAR(255), " +
-                                           "groups VARCHAR(255))";
+                                           "groups VARCHAR(255)," +
+                                           "levels VARCHAR(255))";
 
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(createUserTableSQL);
@@ -83,8 +85,8 @@ public class DatabaseHelper {
 
     // Insert a new help article into the HelpArticles table
     public void insertHelpArticle(HelpArticle article) throws SQLException {
-        String insertArticleSQL = "INSERT INTO HelpArticles (id, header, title, description, keywords, body, references, groups) " +
-                                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertArticleSQL = "INSERT INTO HelpArticles (id, header, title, description, keywords, body, references, groups, levels) " +
+                                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(insertArticleSQL)) {
             pstmt.setLong(1, article.getId());
             pstmt.setString(2, article.getHeader());
@@ -159,15 +161,17 @@ public class DatabaseHelper {
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
+                ArticleLevel level = ArticleLevel.valueOf(rs.getString("level").toUpperCase()); // Convert the level string to an enum
                 HelpArticle article = new HelpArticle(
                     rs.getLong("id"),
                     rs.getString("header"),
                     rs.getString("title"),
                     rs.getString("description"),
-                    List.of(rs.getString("keywords").split(",")),
+                    List.of(rs.getString("keywords").split(",")), // Split keywords into a list
                     rs.getString("body"),
-                    List.of(rs.getString("references").split(",")),
-                    List.of(rs.getString("groups").split(","))
+                    List.of(rs.getString("references").split(",")), // Split references into a list
+                    List.of(rs.getString("groups").split(",")), // Split groups into a list
+                    level // Set the level
                 );
                 articles.add(article);
             }
