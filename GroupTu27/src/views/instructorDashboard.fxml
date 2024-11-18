@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="240.0" prefWidth="521.0" spacing="10" style="-fx-background-color: lightgray;" stylesheets="@student.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StudentController">
-    <Label text="Student Dashboard">
+<VBox alignment="CENTER" prefHeight="240.0" prefWidth="521.0" spacing="10" style="-fx-background-color: lightgray;" stylesheets="@instructor.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InstructorController">
+    <Label text="Instructor Dashboard">
       <font>
          <Font name="System Bold" size="24.0" />
       </font>
@@ -38,10 +38,10 @@
       </rowConstraints>
       
       <children>
-          <Button fx:id="searchArticlesButton" onAction="#handleSearchArticles" text="Search Articles" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" />
-          <Button fx:id="viewAllArticlesButton" onAction="#handleViewAllArticles" text="View All Articles" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER" />
-          <Button fx:id="sendMessageButton" onAction="#handleSendMessage" text="Send Message to Admin" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER" />
-          <Button fx:id="submitFeedbackButton" onAction="#handleSubmitFeedback" text="Submit Feedback" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER" />
+          <Button fx:id="manageHelpArticlesButton" onAction="#handleManageHelpArticles" text="Manage Help Articles" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.halignment="CENTER" />
+          <Button fx:id="backupRestoreButton" onAction="#handleBackupRestore" text="Backup/Restore" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.halignment="CENTER" />
+          <Button fx:id="listStudentButton" onAction="#handleListStudents" text="List Students" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.halignment="CENTER" />
+          <Button fx:id="createSpecialAccessGroupButton" onAction="#handleSpecialAccessGroups" text="Manage Access Groups" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.halignment="CENTER" />
       </children>
       <VBox.margin>
          <Insets />

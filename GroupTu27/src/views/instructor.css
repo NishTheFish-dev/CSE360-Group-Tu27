@@ -1,0 +1,22 @@
+.VBox {
+    -fx-background-color: lightblue; /* Light blue background for instructors */
+}
+
+.button {
+    -fx-background-color: #b0c4de; /* Light steel blue */
+    -fx-text-fill: #1a1a1a; /* Dark text */
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+}
+
+.button:hover {
+    -fx-background-color: #87ceeb; /* Sky blue on hover */
+}
+
+#userListView .label {
+    -fx-background-color: #87ceeb; /* Sky blue for list view labels */
+}
+
+#userListView .context-menu {
+    -fx-background-color: #4682b4; /* Steel blue for context menu */
+}
