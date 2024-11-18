@@ -3,9 +3,11 @@ Group Tuesday 27's Project Github Repository
 
 ## To-do:
 - Improved/Nicer homepage once role is selected and logged in
-- Actually getting the database to work correctly with the existing controllers
+- Doing Phase 3 of the project
 
 ## Recent Updates:
+- 2.1.0:
+  - Added a variety of files to manage encryption of data, and updated help articles with new level functionality (beginner, intermediate, advanced, expert)
 - 1.9.0:
   - Added database functionalities for Admins and Instructors
   - Added views for both managing articles and viewing articles as a student
