@@ -74,7 +74,40 @@ public class LoginController {
             }
         }
 
-        User user = userService.findUserByUsername(username); // Use the service to find the user
+        User user = userService.findUserByUsername(username) ; // Use the service to find the user
+        
+        //Check if PasswordReset is set, otherwise login normally
+        boolean flag = user.isPasswordResetValid();
+        
+        if (flag) {
+        	if (user != null) {
+                // Check if the one-time password is valid
+                if (user.isPasswordResetValid() && password.equals(user.getPasswordReset().getOneTimePassword())) {
+                    // Redirect to a page to set a new password
+                    loadResetPasswordPage(user);
+                } else if (user.getPassword().equals(password)) {
+                    // Normal login flow
+                    loadHomePage(user);
+                } else {
+                    errorMessageLabel.setText("Invalid username or password.");
+                }
+            } 
+        }
+        else {
+        	if (user != null && user.getPassword().equals(password)) {
+                if (!user.isAccountSetupComplete()) {
+                    loadSetupAccountPage(user);
+                    System.out.println(userService.getUsers());
+                } else {
+                    loadHomePage(user);
+                }
+            } else {
+                errorMessageLabel.setText("Invalid username or password.");
+            }
+        }
+        
+        /*
+        
         if (user != null && user.getPassword().equals(password)) {
             if (!user.isAccountSetupComplete()) {
                 loadSetupAccountPage(user);
@@ -100,7 +133,7 @@ public class LoginController {
         } else {
             errorMessageLabel.setText("User not found.");
         }
-        
+        */
     }
     
 
