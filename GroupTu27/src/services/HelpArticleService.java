@@ -53,6 +53,12 @@ public class HelpArticleService {
 
     public void removeArticle(HelpArticle article) {
         articles.remove(article);	// Remove an article
+        try {
+			dbHelper.deleteArticle(article);
+		} catch (SQLException e) {
+			System.out.println("could not delete article from database");
+			e.printStackTrace();
+		}
     }
 
     public void updateArticle(HelpArticle updatedArticle) {

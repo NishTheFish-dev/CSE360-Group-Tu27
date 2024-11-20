@@ -107,9 +107,9 @@ public class DatabaseHelper {
     }
     
     public void deleteArticle(HelpArticle article) throws SQLException{
-    	String sql = "DELETE * FROM HelpArticles WHERE id="+article.getId();
+    	String sql = "DELETE FROM HelpArticles WHERE id="+article.getId();
     	Statement stmt = connection.createStatement();
-    	stmt.executeQuery(sql);
+    	stmt.executeUpdate(sql);
     }
     
     // Retrieve all users from the Users table

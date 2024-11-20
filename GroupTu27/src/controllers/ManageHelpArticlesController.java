@@ -101,6 +101,7 @@ public class ManageHelpArticlesController {
         HelpArticle selectedArticle = articleListView.getSelectionModel().getSelectedItem();
         if (selectedArticle != null) {
             helpArticleService.removeArticle(selectedArticle);
+            
             loadArticles();
         }
     }
