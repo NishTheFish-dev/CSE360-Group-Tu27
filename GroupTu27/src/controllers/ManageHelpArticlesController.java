@@ -6,21 +6,23 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import models.HelpArticle;
-import models.HelpArticle.ArticleLevel;
 import services.HelpArticleService;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ManageHelpArticlesController {
 
     @FXML private ListView<HelpArticle> articleListView;
     @FXML private TextField headerField, titleField, keywordsField, referencesField, groupsField, backupFileNameField;
     @FXML private TextArea descriptionField, bodyField;
+    @FXML private ChoiceBox<String> levelChoiceBox;
 
     private final HelpArticleService helpArticleService;
     private final BackupRestoreHelper backupRestoreHelper = new BackupRestoreHelper();
-    
+    private String selectedLevel;
     public ManageHelpArticlesController() {
         HelpArticleService tempService;
         try {
@@ -53,7 +55,13 @@ public class ManageHelpArticlesController {
     private void handleAddArticle() throws SQLException {
         try {
             // Parse the selected level from the choice box
-            ArticleLevel selectedLevel = ArticleLevel.valueOf(levelChoiceBox.getValue().toUpperCase());
+        	
+        	selectedLevel = null;
+        	levelChoiceBox.getItems().addAll("Beginner", "Intermediate", "Advanced", "Expert");
+        	levelChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        		selectedLevel = newValue;
+
+         		});
 
             // Create a new HelpArticle object with the updated constructor
             HelpArticle newArticle = new HelpArticle(

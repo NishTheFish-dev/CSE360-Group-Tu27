@@ -1,7 +1,6 @@
 package database;
 
 import models.HelpArticle;
-import models.HelpArticle.ArticleLevel;
 import models.User;
 import services.UserService;
 
@@ -161,7 +160,7 @@ public class DatabaseHelper {
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                ArticleLevel level = ArticleLevel.valueOf(rs.getString("level").toUpperCase()); // Convert the level string to an enum
+                String level = rs.getString("level");
                 HelpArticle article = new HelpArticle(
                     rs.getLong("id"),
                     rs.getString("header"),
