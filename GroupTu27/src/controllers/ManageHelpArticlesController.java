@@ -40,6 +40,8 @@ public class ManageHelpArticlesController {
         if (helpArticleService != null) {
             loadArticles(); // Load articles only if service was initialized successfully
         }
+        //initialize Select Article Level choice box
+    	levelChoiceBox.getItems().addAll("All", "Beginner", "Intermediate", "Advanced", "Expert");
     }
     
 
@@ -57,13 +59,7 @@ public class ManageHelpArticlesController {
         try {
             // Parse the selected level from the choice box
         	
-        	selectedLevel = null;
-        	levelChoiceBox.getItems().addAll("All", "Beginner", "Intermediate", "Advanced", "Expert");
-        	levelChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        		selectedLevel = newValue;
-
-         		});
-
+        	String selectedLevel = (String) levelChoiceBox.getValue();
             // Create a new HelpArticle object with the updated constructor
             HelpArticle newArticle = new HelpArticle(
                     System.currentTimeMillis(),

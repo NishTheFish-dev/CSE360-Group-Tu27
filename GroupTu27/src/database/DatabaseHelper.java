@@ -161,7 +161,6 @@ public class DatabaseHelper {
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                //String level = rs.getString("level");
                 HelpArticle article = new HelpArticle(
                     rs.getLong("id"),
                     rs.getString("header"),
