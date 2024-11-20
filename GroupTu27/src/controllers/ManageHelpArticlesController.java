@@ -57,7 +57,7 @@ public class ManageHelpArticlesController {
             // Parse the selected level from the choice box
         	
         	selectedLevel = null;
-        	levelChoiceBox.getItems().addAll("Beginner", "Intermediate", "Advanced", "Expert");
+        	levelChoiceBox.getItems().addAll("All", "Beginner", "Intermediate", "Advanced", "Expert");
         	levelChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         		selectedLevel = newValue;
 
