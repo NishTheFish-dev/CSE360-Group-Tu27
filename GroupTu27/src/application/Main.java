@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  **/
 
 public class Main extends Application {
-
+	
     @Override
     public void start(Stage primaryStage) throws Exception {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));	//Start the app by opening the login screen
@@ -30,6 +30,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+    	System.out.println("java version: "+System.getProperty("java.version"));
+    	System.out.println("javafx.version: " + System.getProperty("javafx.version"));
         launch(args);
     }
 }

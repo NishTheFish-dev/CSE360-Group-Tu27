@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="CENTER" hgap="10" prefHeight="240.0" prefWidth="520.0" vgap="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SetupAccountController">
+<GridPane alignment="CENTER" hgap="10" prefHeight="240.0" prefWidth="520.0" vgap="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SetupAccountController">
     <Label text="First Name:" GridPane.halignment="RIGHT" />
     <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
     

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="240.0" prefWidth="521.0" spacing="10" style="-fx-background-color: lightgray;" stylesheets="@admin.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
+<VBox alignment="CENTER" prefHeight="240.0" prefWidth="521.0" spacing="10" style="-fx-background-color: lightgray;" stylesheets="@admin.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminController">
     <Label text="Admin Dashboard">
       <font>
          <Font name="System Bold" size="24.0" />
