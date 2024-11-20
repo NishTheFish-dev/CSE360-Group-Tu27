@@ -120,12 +120,13 @@ public class AdminController {
         }
     }
     
+    //Invite User button controls
     @FXML
     private void handleInviteUser() {
         //String username = inviteUsernameField.getText();	// Choose a username to assign to the new user
        // String roleName = inviteRoleField.getText();	// Choose a role to assign to the new user
-        roleChoice.setVisible(false);
-        roleLabel.setVisible(false);
+        roleChoice.setVisible(true);
+        roleLabel.setVisible(true);
     	String inviteCode = generateCode();
     	userService.clearCode();
        // if (username.isEmpty() || roleName.isEmpty()) {	// If either field is empty, cancel and possibly send error msg

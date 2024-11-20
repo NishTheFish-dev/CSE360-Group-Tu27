@@ -161,7 +161,7 @@ public class DatabaseHelper {
 
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                String level = rs.getString("level");
+                //String level = rs.getString("level");
                 HelpArticle article = new HelpArticle(
                     rs.getLong("id"),
                     rs.getString("header"),
@@ -171,7 +171,7 @@ public class DatabaseHelper {
                     rs.getString("body"),
                     List.of(rs.getString("references").split(",")), // Split references into a list
                     List.of(rs.getString("groups").split(",")), // Split groups into a list
-                    level // Set the level
+                    rs.getString("levels") // Set the level
                 );
                 articles.add(article);
             }

@@ -24,6 +24,7 @@ public class ManageHelpArticlesController {
     private final BackupRestoreHelper backupRestoreHelper = new BackupRestoreHelper();
     private String selectedLevel;
     public ManageHelpArticlesController() {
+    	//fix
         HelpArticleService tempService;
         try {
             tempService = new HelpArticleService();
