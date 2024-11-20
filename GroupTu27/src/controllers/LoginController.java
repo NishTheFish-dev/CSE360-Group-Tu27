@@ -105,35 +105,6 @@ public class LoginController {
                 errorMessageLabel.setText("Invalid username or password.");
             }
         }
-        
-        /*
-        
-        if (user != null && user.getPassword().equals(password)) {
-            if (!user.isAccountSetupComplete()) {
-                loadSetupAccountPage(user);
-                System.out.println(userService.getUsers());
-            } else {
-                loadHomePage(user);
-            }
-        } else {
-            errorMessageLabel.setText("Invalid username or password.");
-        }
-        
-        if (user != null) {
-            // Check if the one-time password is valid
-            if (user.isPasswordResetValid() && password.equals(user.getPasswordReset().getOneTimePassword())) {
-                // Redirect to a page to set a new password
-                loadResetPasswordPage(user);
-            } else if (user.getPassword().equals(password)) {
-                // Normal login flow
-                loadHomePage(user);
-            } else {
-                errorMessageLabel.setText("Invalid username or password.");
-            }
-        } else {
-            errorMessageLabel.setText("User not found.");
-        }
-        */
     }
     
 
