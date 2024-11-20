@@ -95,6 +95,7 @@ public class DatabaseHelper {
             pstmt.setString(6, article.getBody());
             pstmt.setString(7, String.join(",", article.getReferences())); // Join references as a comma-separated string
             pstmt.setString(8, String.join(",", article.getGroups())); // Join groups as a comma-separated string
+            pstmt.setString(9,  article.getLevel());
             pstmt.executeUpdate();
         }
     }
