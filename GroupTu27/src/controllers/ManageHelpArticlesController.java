@@ -50,7 +50,7 @@ public class ManageHelpArticlesController {
     		selectedLevel = newValue;
 
      		});
-    	System.out.print(selectedLevel);
+    	//System.out.print(selectedLevel);
     }
     
 
@@ -118,7 +118,7 @@ public class ManageHelpArticlesController {
     private void handleDeleteArticle() throws SQLException {
         String selectedArticle = articleListView.getSelectionModel().getSelectedItem();
         long id = Long.parseLong(selectedArticle.substring(0,13));
-        System.out.print(id);
+        //System.out.print(id);
         HelpArticle deleteArticle = null;
         List<HelpArticle> allArticles = helpArticleService.getAllArticles();
         for(int i = 0; i < allArticles.size(); i++) {

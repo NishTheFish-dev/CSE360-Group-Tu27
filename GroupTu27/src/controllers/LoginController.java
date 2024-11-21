@@ -192,10 +192,14 @@ public class LoginController {
 	// If all goes well with logging in, this takes us to the home page
     private void loadHomePage(User user) {
         try {
+        	System.out.print("loading Home page...");
             if (user.getRoles().size() == 1) {	// In the case somebody has more than 1 role, they need to decide which home page to navigate to
-                loadRoleHomePage(user, user.getRoles().get(0));	// With only 1 role, find and load into the correct home page
+                System.out.print(user.getRoles());
+            	loadRoleHomePage(user, user.getRoles().get(0));	// With only 1 role, find and load into the correct home page
             } else {	// If there is more than 1 role, we go to role selection
-                // Load role selection page if user has multiple roles
+            	System.out.print(user.getRoles());
+            	System.out.println("Loading Role select...");
+            	// Load role selection page if user has multiple roles
             	userService.saveUser(user);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/roleSelection.fxml"));	// Loading the GUI settings for role selection
                 Parent root = loader.load();
