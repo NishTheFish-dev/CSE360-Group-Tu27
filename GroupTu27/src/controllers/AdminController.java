@@ -126,8 +126,8 @@ public class AdminController {
     private void handleInviteUser() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/InviteUser.fxml"));
         Parent root = loader.load();
+        //InviteUserController controller = loader.getController();
 
-        // Open the ManageHelpArticles view in a new stage
         Stage stage = new Stage();
         stage.setTitle("Invite User");
         stage.setScene(new Scene(root));
@@ -160,7 +160,7 @@ public class AdminController {
     }
 
     // Generate a random one-time password (can be improved as needed)
-    private String generateOneTimePassword() {
+    public static String generateOneTimePassword() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuilder password = new StringBuilder();
