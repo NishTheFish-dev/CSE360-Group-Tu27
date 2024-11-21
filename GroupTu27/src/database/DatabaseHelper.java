@@ -69,7 +69,8 @@ public class DatabaseHelper {
             stmt.execute(createHelpArticleTableSQL);
         }
     }
-
+    
+    // Prints User table for debugging
     public void printUserTables() throws SQLException {
     	String strQuery = "SELECT * from Users";
     	Statement stmt = this.connection.createStatement();
@@ -88,6 +89,8 @@ public class DatabaseHelper {
     		
     	}
     }
+    
+    // Prints article table for debugging
     public void printArticleTables() throws SQLException {
     	String strQuery = "SELECT * from HelpArticles";
     	Statement stmt = this.connection.createStatement();
@@ -139,12 +142,14 @@ public class DatabaseHelper {
         }
     }
     
+    // Deletes a user
     public void deleteUser(User user) throws SQLException {
     	String sql = "DELETE FROM Users WHERE username="+user.getUsername();
     	Statement stmt = connection.createStatement();
 		stmt.executeUpdate(sql); 
     }
     
+    // Deletse an article
     public void deleteArticle(HelpArticle article) throws SQLException{
     	String sql = "DELETE FROM HelpArticles WHERE id="+article.getId();
     	Statement stmt = connection.createStatement();
@@ -167,6 +172,7 @@ public class DatabaseHelper {
         return users;
     }
     
+    // Finds a specific user based on the name of the user, and returns it as an user object
     public User getUser(String user) throws SQLException {
     	User tempUser = null;
     	String sql = "SELECT * FROM Users WHERE username="+user;
@@ -182,6 +188,7 @@ public class DatabaseHelper {
     	
     }
     
+    // Checks if a user filled out their account information
     public int checkIfComplete(String username) throws SQLException {
     	String sql = "SELECT isAccountComplete FROM Users WHERE username="+username;
     	Statement stmt = connection.createStatement();
