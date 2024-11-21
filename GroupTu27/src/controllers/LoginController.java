@@ -143,19 +143,25 @@ public class LoginController {
     				c = Character.toLowerCase(c);
     				switch (c) {
     					case 'a':
+    						Role role = new Role("Admin");
+    						user.addRole(role);
     						//user.addRole();
     						break;
     					case 'i':
+    						Role Instructor = new Role("Instructor");
+    						user.addRole(Instructor);
     						//user.addRole();
     						break;
     					case 's':
+    						Role student = new Role("Student");
+    						user.addRole(student);
     						//user.addRole();
     						break;
     				}
     			}
         		
         		userService.addUser(user);
-        		System.out.println(user);
+        		//System.out.println(user);
         		loadSetupAccountPage(user);
         		userService.removeCode(codeexist);
         		
@@ -191,51 +197,85 @@ public class LoginController {
 
 	// If all goes well with logging in, this takes us to the home page
     private void loadHomePage(User user) {
-        try {
+//        try {
+    	  
         	System.out.print("loading Home page...");
-            if (user.getRoles().size() == 1) {	// In the case somebody has more than 1 role, they need to decide which home page to navigate to
-                System.out.print(user.getRoles());
-            	loadRoleHomePage(user, user.getRoles().get(0));	// With only 1 role, find and load into the correct home page
-            } else {	// If there is more than 1 role, we go to role selection
-            	System.out.print(user.getRoles());
-            	System.out.println("Loading Role select...");
-            	// Load role selection page if user has multiple roles
-            	userService.saveUser(user);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/roleSelection.fxml"));	// Loading the GUI settings for role selection
-                Parent root = loader.load();
-                
-                Stage stage = (Stage) usernameField.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.show();	// Show the loaded scene for role selection
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        	System.out.print(user.getRoles());
+        	loadRoleHomePage(user, user.getRoles().get(0));
+        	
+        	
+//            if (user.getRoles().size() == 1) {	// In the case somebody has more than 1 role, they need to decide which home page to navigate to
+//                System.out.print(user.getRoles());
+//            	loadRoleHomePage(user, user.getRoles().get(0));	// With only 1 role, find and load into the correct home page
+//            } else {	// If there is more than 1 role, we go to role selection
+//            	System.out.print(user.getRoles());
+//            	System.out.println("Loading Role select...");
+//            	// Load role selection page if user has multiple roles
+//           	userService.saveUser(user);
+//            	
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/roleSelection.fxml"));	// Loading the GUI settings for role selection
+//                Parent root = loader.load();
+//                
+//                Stage stage = (Stage) usernameField.getScene().getWindow();
+//                stage.setScene(new Scene(root));
+//                stage.show();	// Show the loaded scene for role selection
+//            }
+//        } catch (Exception e) { 
+//            e.printStackTrace(); 
+//        }
+        
+        
     }
 
 	// In the case somebody has been assigned more than 1 role, this allows them to choose which home page to navigate to
     private void loadRoleHomePage(User user, Role role) {
+    	System.out.println("test-------------------");
         try {
-            FXMLLoader loader;
-            Parent root;
+            //FXMLLoader loader;
+            //Parent root;
 
             // Determine the correct home page based on the user's role
             if (role.getRoleName().equals("Admin")) {
-                loader = new FXMLLoader(getClass().getResource("/views/adminDashboard.fxml"));
+            	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/adminDashboard.fxml"));
+                Parent root = loader.load();
+                //InviteUserController controller = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setTitle("Admin View");
+                stage.setScene(new Scene(root));
+                stage.show();
+                
             } else if (role.getRoleName().equals("Student")) {
-                loader = new FXMLLoader(getClass().getResource("/views/home.fxml"));
+                //loader = new FXMLLoader(getClass().getResource("/views/studentDashboard.fxml"));
+            	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/studentDashboard.fxml"));
+                Parent root = loader.load();
+                //InviteUserController controller = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setTitle("Student View");
+                stage.setScene(new Scene(root));
+                stage.show();
+            } else if (role.getRoleName().equals("Instructor")) {
+            	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/instructorDashboard.fxml"));
+                Parent root = loader.load();
+                //InviteUserController controller = loader.getController();
+
+                Stage stage = new Stage();
+                stage.setTitle("Instructor View");
+                stage.setScene(new Scene(root));
+                stage.show();
             } else {
                 throw new IllegalArgumentException("Invalid role: " + role.getRoleName());
             }
 
-            root = loader.load();
+            //root = loader.load();
             
             // Get the current stage from any component
-            Stage stage = (Stage) usernameField.getScene().getWindow(); // Use any active element from the scene to get the stage
+            //Stage stage = (Stage) usernameField.getScene().getWindow(); // Use any active element from the scene to get the stage
 
             // Set the new scene
-            stage.setScene(new Scene(root));
-            stage.show();
+            //stage.setScene(new Scene(root));
+            //stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
