@@ -212,6 +212,26 @@ public class DatabaseHelper {
         return users;
     }
     
+    public void updateRole(String role, String username, int id) throws SQLException{
+    	String sql = "UPDATE Users SET role = ? WHERE id = ?";
+    	String totalRoles = "";
+    	User user = userService.findUserByUsername(username);
+    	for(int i = 0; i < user.getRoles().size(); i++) {
+    		if(user.getRoles().get(i).getRoleName() == "a") {
+    			totalRoles += "a";
+    		} else if(user.getRoles().get(i).getRoleName() == "i") {
+    			totalRoles += "i";
+    		} else if(user.getRoles().get(i).getRoleName() == "s") {
+    			totalRoles += "s";
+    		}
+    	}
+    	try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+    		pstmt.setInt(2, id);
+    		pstmt.setString(1,  totalRoles);
+    		
+    	}
+    }
+    
     // Check if a code exist, return the id of the code if it exist, return -1 if it doesn't
     public int cmpCode(String code) throws SQLException{
     	int id;
@@ -251,11 +271,23 @@ public class DatabaseHelper {
     	ResultSet rs = stmt.executeQuery(sql);
     	while(rs.next()) {
     		String username = rs.getString("username");
-    		
     		tempUser = userService.findUserByUsername(username);
     		return tempUser;
     	}
 		return tempUser;
+    	
+    }
+    
+    public int getUserId(String user) throws SQLException {
+    	int userId = -1;
+    	String sql = "SELECT id FROM Users WHERE username="+user;
+    	Statement stmt = connection.createStatement();
+    	ResultSet rs = stmt.executeQuery(sql);
+    	while(rs.next()) {
+    		userId = rs.getInt("id");
+    		return userId;
+    	}
+		return userId;
     	
     }
     

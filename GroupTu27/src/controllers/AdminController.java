@@ -262,7 +262,7 @@ public class AdminController {
     	
     	inviteCodeLabel.setVisible(false);
     	removeOrAddRole.getItems().addAll("Add", "Remove");	//These are the options the user will have for the role action
-    	roleChoice.getItems().addAll("Admin", "Student", "Teacher");	//These are the options the user will have for the role selection
+    	roleChoice.getItems().addAll("a", "s", "i");	//These are the options the user will have for the role selection
     	//This shows the relevant buttons to make the choice for role
      	userSelectRole.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
      		currentUser = userService.findUserByUsername(newValue);
@@ -303,7 +303,12 @@ public class AdminController {
     			if(!currentUser.hasRole(new Role(newValue))){ //Looks at the ChoiceBox and checks the current value against the newValue
         			roleLabel.setVisible(true); //Sets the roleLabel to visible and adds text to it for selected role
         			roleLabel.setText("Selected: " + newValue);
-        			currentUser.addRole(new Role(newValue)); //Gives Current User selected role in the choiceBox
+        			try {
+						currentUser.updateRole(new Role(newValue), currentUser.getUsername());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} //Gives Current User selected role in the choiceBox
         			System.out.println(currentUser.getRoles());
         		} else {
         			roleLabel.setVisible(true); //Sets the label to tell admin that user already has selected role

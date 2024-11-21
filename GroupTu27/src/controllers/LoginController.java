@@ -61,7 +61,7 @@ public class LoginController {
             // The system has no users; the first user must create an admin account
             if (validateAdminCreation(username, password)) {
                 User newUser = new User(username, password);
-                newUser.addRole(new Role("Admin"));
+                newUser.addRole(new Role("a"));
                 userService.addUser(newUser); // Save the new user in the service
                 System.out.print(users);
                 errorMessageLabel.setText("Admin account created. Please log in again.");

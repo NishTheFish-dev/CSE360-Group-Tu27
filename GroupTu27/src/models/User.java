@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.DatabaseHelper;
+import services.UserService;
 
 /**
  * 
@@ -29,7 +30,7 @@ public class User {
     private final DatabaseHelper dbHelper = new DatabaseHelper();
 
     // This compiles the user details needed for logging in
-    public User(String username, String password) throws SQLException {
+    public User(String username, String password) throws SQLException{
         this.username = username;
         this.password = password;
         this.roles = new ArrayList<>();
@@ -127,8 +128,18 @@ public class User {
         return roles;	// Get the list of roles of a user
     }
 
-    public void addRole(Role role) {
+    public void addRole(Role role){
+    	
         if (!roles.contains(role)) {
+        	
+            roles.add(role);	// Add a new role to the user
+        }
+    }
+    
+    public void updateRole(Role role, String username) throws SQLException{
+    	int id = dbHelper.getUserId(username);
+        if (!roles.contains(role)) {
+        	dbHelper.updateRole(role.getRoleName(), username, id);
             roles.add(role);	// Add a new role to the user
         }
     }
