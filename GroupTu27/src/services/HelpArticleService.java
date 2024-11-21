@@ -5,6 +5,7 @@ import models.HelpArticle;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
@@ -78,6 +79,21 @@ public class HelpArticleService {
                 .filter(article -> article.belongsToGroup(group))
                 .collect(Collectors.toList()); // List all articles, sorted by groups
     }
+    
+    public List<String> getArticlesByName() throws SQLException {
+    	List<String> articles = new ArrayList<>();
+    	String sql = "SELECT title from HelpArticles";
+    	Statement stmt = this.connection.createStatement();
+    	ResultSet rs = stmt.executeQuery(sql);
+    	
+    	
+    	while(rs.next()) {
+    		articles.add(rs.getString("title"));
+    	}
+    	return articles;
+    }
+    
+    
     
     /**
      * Backup all articles to external storage

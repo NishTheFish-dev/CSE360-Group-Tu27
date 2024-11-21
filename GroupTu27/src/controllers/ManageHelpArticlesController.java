@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ManageHelpArticlesController {
 
-    @FXML private ListView<HelpArticle> articleListView;
+    @FXML private ListView<String> articleListView;
     @FXML private TextField headerField, titleField, keywordsField, referencesField, groupsField, backupFileNameField;
     @FXML private TextArea descriptionField, bodyField;
     @FXML private ChoiceBox<String> levelChoiceBox;
@@ -24,7 +24,6 @@ public class ManageHelpArticlesController {
     private final BackupRestoreHelper backupRestoreHelper = new BackupRestoreHelper();
     private String selectedLevel;
     public ManageHelpArticlesController() {
-    	//fix
         HelpArticleService tempService;
         try {
             tempService = new HelpArticleService();
@@ -36,18 +35,34 @@ public class ManageHelpArticlesController {
     }
     
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         if (helpArticleService != null) {
-            loadArticles(); // Load articles only if service was initialized successfully
+        	try {
+        		loadArticles(); // Load articles only if service was initialized successfully
+        	}finally {
+        	}
+        
         }
-        //initialize Select Article Level choice box
-    	levelChoiceBox.getItems().addAll("All", "Beginner", "Intermediate", "Advanced", "Expert");
+        
+    	levelChoiceBox.getItems().addAll("Beginner", "Intermediate", "Advanced", "Expert");
+    	levelChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+    		System.out.print(newValue);
+    		selectedLevel = newValue;
+
+     		});
+    	System.out.print(selectedLevel);
     }
     
 
-    private void loadArticles() {
-        ObservableList<HelpArticle> articles = FXCollections.observableArrayList(helpArticleService.getAllArticles());
-        articleListView.setItems(articles);
+    private void loadArticles() throws SQLException{
+    	List<String> displayArticles = new ArrayList<>();
+    	List<HelpArticle> allArticles = helpArticleService.getAllArticles();
+    	for(int i = 0; i < allArticles.size(); i++) {
+    		displayArticles.add(allArticles.get(i).getId() + " " + allArticles.get(i).getTitle());
+    	}
+    	ObservableList<String> articles = FXCollections.observableArrayList(displayArticles);
+    	articleListView.setItems(articles);
+    	
     }
 
     /**
@@ -59,7 +74,9 @@ public class ManageHelpArticlesController {
         try {
             // Parse the selected level from the choice box
         	
-        	String selectedLevel = (String) levelChoiceBox.getValue();
+        	
+        	
+
             // Create a new HelpArticle object with the updated constructor
             HelpArticle newArticle = new HelpArticle(
                     System.currentTimeMillis(),
@@ -95,13 +112,22 @@ public class ManageHelpArticlesController {
 
 	/**
      * This functions handles deleting articles from the list
+	 * @throws SQLException 
      */
     @FXML
-    private void handleDeleteArticle() {
-        HelpArticle selectedArticle = articleListView.getSelectionModel().getSelectedItem();
+    private void handleDeleteArticle() throws SQLException {
+        String selectedArticle = articleListView.getSelectionModel().getSelectedItem();
+        long id = Long.parseLong(selectedArticle.substring(0,13));
+        System.out.print(id);
+        HelpArticle deleteArticle = null;
+        List<HelpArticle> allArticles = helpArticleService.getAllArticles();
+        for(int i = 0; i < allArticles.size(); i++) {
+        	if(id == allArticles.get(i).getId()) {
+        		deleteArticle = allArticles.get(i);
+        	}
+        }
         if (selectedArticle != null) {
-            helpArticleService.removeArticle(selectedArticle);
-            
+            helpArticleService.removeArticle(deleteArticle);
             loadArticles();
         }
     }
