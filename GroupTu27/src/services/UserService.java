@@ -86,6 +86,11 @@ public class UserService {
     	return id;
     }
     
+    public String getRolesFromCode(String code) throws SQLException {
+    	String roles = this.dbHelper.getRolefromCode(code);
+    	return roles;
+    }
+    
     public void setPasswordReset(User user, PasswordReset passwordReset) {
         user.setPasswordReset(passwordReset);	// Resetting a user's password
     }

@@ -127,19 +127,36 @@ public class LoginController {
         String password = passwordField.getText();
         String confirmPass = confirmPasswordField.getText();
         String code = invitationCodeField.getText();
+        char c;
         
         //check if code exist
         int codeexist = userService.compareCode(code);
         
         if(codeexist > -1) {
         	if(!username.isEmpty() || !password.isEmpty() || !confirmPass.isEmpty()) {
-        		//System.out.println("true");
         		User user = new User(username, password);
-        		user.addRole(new Role("Student"));
+        		String roles = userService.getRolesFromCode(code);
+        		
+        		//add roles based on Roles string
+        		for (int i = 0; i < roles.length(); i++) {
+    				c = roles.charAt(i);
+    				c = Character.toLowerCase(c);
+    				switch (c) {
+    					case 'a':
+    						//user.addRole();
+    						break;
+    					case 'i':
+    						//user.addRole();
+    						break;
+    					case 's':
+    						//user.addRole();
+    						break;
+    				}
+    			}
+        		
         		userService.addUser(user);
         		System.out.println(user);
         		loadSetupAccountPage(user);
-        		//userService.clearCode();
         		userService.removeCode(codeexist);
         		
         	} else if(username.isEmpty() || password.isEmpty() || confirmPass.isEmpty()) {

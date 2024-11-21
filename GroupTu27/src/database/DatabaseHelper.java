@@ -227,6 +227,22 @@ public class DatabaseHelper {
 		return -1;
     }
     
+    // get the roles of a code
+    public String getRolefromCode(String code) throws SQLException {
+    	String roles = "";
+    	String query = "SELECT * FROM InviteCodes WHERE code = ?";
+    	PreparedStatement prep = this.connection.prepareStatement(query);
+    	
+    	prep.setString(1, code);
+    	ResultSet rs = prep.executeQuery();
+    	if (rs.next()) {
+    		roles = rs.getString("roles");
+    		return roles;
+    	}
+    	return roles;
+
+    }
+    
     // Finds a specific user based on the name of the user, and returns it as an user object
     public User getUser(String user) throws SQLException {
     	User tempUser = null;
