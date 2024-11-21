@@ -49,7 +49,6 @@ public class LoginController {
     	this.userService = new UserService(); // Get the singleton instance of UserService
     }
     
-
     // This function takes the information input to check for valid login
     @FXML
     private void handleLogin() throws SQLException {

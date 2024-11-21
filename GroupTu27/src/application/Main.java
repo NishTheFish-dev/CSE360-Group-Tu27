@@ -2,12 +2,18 @@ package application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
+import services.UserService;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.sql.SQLException;
+
+import services.UserService;
 
 /**
  * This app is in phase 2.
@@ -24,12 +30,22 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));	//Start the app by opening the login screen
+    	//LoginController controller = loader.getController();
+    	//controller.printTable();
+
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(loader.load()));
         primaryStage.show();																//Show GUI after loading the scene
+        
     }
 
     public static void main(String[] args) {
+    	try {
+			UserService userService = new UserService();
+			userService.PrintTables();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     	System.out.println("java version: "+System.getProperty("java.version"));
     	System.out.println("javafx.version: " + System.getProperty("javafx.version"));
         launch(args);

@@ -29,6 +29,11 @@ public class UserService {
         this.dbHelper = new DatabaseHelper();
         this.users = dbHelper.getAllUsers(); // Load users from database
     }
+    
+    public void PrintTables() throws SQLException {
+    	this.dbHelper.printUserTables();
+        this.dbHelper.printArticleTables();
+    }
 
     public void addUser(User user) throws SQLException {
         users.add(user);

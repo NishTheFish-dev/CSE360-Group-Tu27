@@ -70,6 +70,45 @@ public class DatabaseHelper {
         }
     }
 
+    public void printUserTables() throws SQLException {
+    	String strQuery = "SELECT * from Users";
+    	Statement stmt = this.connection.createStatement();
+    	ResultSet rs = stmt.executeQuery(strQuery);
+    	
+    	int i = 0;
+    	System.out.println("----Users Table Contents----");
+    	while(rs.next()) {
+    		i++;
+    		System.out.println("item:\t\t" + i);
+    		System.out.println("id:\t\t" + rs.getInt("id"));
+    		System.out.println("username:\t" + rs.getString("username"));
+    		System.out.println("password:\t" + rs.getString("password"));
+    		System.out.println("role:\t\t" + rs.getString("role"));
+    		System.out.println("isAccountComplete:\t" + rs.getInt("isAccountComplete") + "\n");
+    		
+    	}
+    }
+    public void printArticleTables() throws SQLException {
+    	String strQuery = "SELECT * from HelpArticles";
+    	Statement stmt = this.connection.createStatement();
+    	ResultSet rs = stmt.executeQuery(strQuery);
+    	int i = 0;
+    	System.out.println("----Help Articles Table Contents----");
+    	while(rs.next()) {
+    		i++;
+    		System.out.println("item:\t\t" + i);
+    		System.out.println("id:\t\t" + rs.getLong("id"));
+    		System.out.println("header:\t\t" + rs.getString("header"));
+    		System.out.println("title:\t\t" + rs.getString("title"));
+    		System.out.println("description:\t" + rs.getString("description"));
+    		System.out.println("keywords:\t" + rs.getString("keywords"));
+    		System.out.println("body:\t\t" + rs.getString("body"));
+    		System.out.println("references:\t\t" + rs.getString("references"));
+    		System.out.println("groups:\t\t" + rs.getString("groups"));
+    		System.out.println("levels:\t\t" + rs.getString("levels"));
+    	}
+    }
+    
     // Insert a new user into the Users table
     public void insertUser(User user) throws SQLException {
         String insertUserSQL = "INSERT INTO Users (username, password, role, isAccountComplete) VALUES (?, ?, ?, ?)";
@@ -101,9 +140,9 @@ public class DatabaseHelper {
     }
     
     public void deleteUser(User user) throws SQLException {
-    	String sql = "DELETE * FROM Users WHERE username="+user.getUsername();
+    	String sql = "DELETE FROM Users WHERE username="+user.getUsername();
     	Statement stmt = connection.createStatement();
-		stmt.executeQuery(sql); 
+		stmt.executeUpdate(sql); 
     }
     
     public void deleteArticle(HelpArticle article) throws SQLException{
