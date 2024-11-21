@@ -22,7 +22,7 @@ import services.UserService;
  * There are also more functionalities for admin users for managing users, roles, and help articles.
  * Instructors and Admins can manage articles, Students are able to view them.
  * 
- * @version 2.1.0
+ * @version 2.4.0
  **/
 
 public class Main extends Application {
