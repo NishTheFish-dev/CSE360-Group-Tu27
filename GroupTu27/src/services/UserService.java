@@ -33,6 +33,7 @@ public class UserService {
     public void PrintTables() throws SQLException {
     	this.dbHelper.printUserTables();
         this.dbHelper.printArticleTables();
+        this.dbHelper.printInviteCodeTables();
     }
 
     public void addUser(User user) throws SQLException {
@@ -61,16 +62,28 @@ public class UserService {
     		}
     	}
     }
+    
+    public void removeCode(int code) throws SQLException {
+    	this.dbHelper.deleteCode(code);
+    }
+    
     public User getCurrent() {
     	return currentUser;	// Returns the current user
     }
     
-    public void addCode(String code) throws SQLException {
-    	codes.add(code);	// Add a new code
-    	this.dbHelper.insertInviteCodes(code); //adds code to database
+    //add a code to the database
+    public void addCode(String code, String roles) throws SQLException {
+    	this.dbHelper.insertInviteCodes(code, roles); //adds code to database
     }
+    
     public String getCode() {
     	return codes.get(0);	// Get the code
+    }
+    
+    //return true if it exist, otherwise return false
+    public int compareCode(String code) throws SQLException {
+    	int id = this.dbHelper.cmpCode(code);
+    	return id;
     }
     
     public void setPasswordReset(User user, PasswordReset passwordReset) {

@@ -66,7 +66,8 @@ public class DatabaseHelper {
         
         String createInviteUserCodeTableSQL = 	"CREATE TABLE IF NOT EXISTS InviteCodes(" +
         										"id BIGINT AUTO_INCREMENT PRIMARY KEY," +
-        										"code VARCHAR(255))";
+        										"code VARCHAR(255)," + 
+        										"roles VARCHAR(255))";
         
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(createUserTableSQL);
@@ -117,6 +118,22 @@ public class DatabaseHelper {
     	}
     }
     
+    // Prints invitation code table for debugging
+    public void printInviteCodeTables() throws SQLException {
+    	String strQuery = "SELECT * from InviteCodes";
+    	Statement stmt = this.connection.createStatement();
+    	ResultSet rs = stmt.executeQuery(strQuery);
+    	int i = 0;
+    	System.out.println("----Invite Codes Table Contents----");
+    	while(rs.next()) {
+    		i++;
+    		System.out.println("item:\t\t" + i);
+    		System.out.println("id:\t\t" + rs.getInt("id"));
+    		System.out.println("code:\t\t" + rs.getString("code"));
+    		System.out.println("roles:\t\t" + rs.getString("roles"));
+    	}
+    }
+    
     // Insert a new user into the Users table
     public void insertUser(User user) throws SQLException {
         String insertUserSQL = "INSERT INTO Users (username, password, role, isAccountComplete) VALUES (?, ?, ?, ?)";
@@ -148,12 +165,13 @@ public class DatabaseHelper {
     }
     
     // Insert a new code into the Invite Code table
-    public void insertInviteCodes(String code) throws SQLException{
-    	String insertInviteCodeSQL = "INSERT INTO InviteCodes (id) " + 
-    								 "Values (?)";
+    public void insertInviteCodes(String code, String roles) throws SQLException{
+    	String insertInviteCodeSQL = "INSERT INTO InviteCodes (code, roles) " + 
+    								 "Values (?, ?)";
     	
     	try (PreparedStatement pstmt = connection.prepareStatement(insertInviteCodeSQL)) {
     		pstmt.setString(1, code);
+    		pstmt.setString(2, roles);
     		pstmt.executeUpdate();
     	}
     }
@@ -167,6 +185,13 @@ public class DatabaseHelper {
     // Deletse an article
     public void deleteArticle(HelpArticle article) throws SQLException{
     	String sql = "DELETE FROM HelpArticles WHERE id="+article.getId();
+    	Statement stmt = connection.createStatement();
+    	stmt.executeUpdate(sql);
+    }
+    
+    // Delete a code
+    public void deleteCode(int code) throws SQLException {
+    	String sql = "DELETE FROM InviteCodes WHERE id=" + code;
     	Statement stmt = connection.createStatement();
     	stmt.executeUpdate(sql);
     }
@@ -185,6 +210,21 @@ public class DatabaseHelper {
             }
         }
         return users;
+    }
+    
+    // Check if a code exist, return the id of the code if it exist, return -1 if it doesn't
+    public int cmpCode(String code) throws SQLException{
+    	int id;
+    	String query = "SELECT * FROM InviteCodes WHERE code = ?";
+		PreparedStatement prep = this.connection.prepareStatement(query);
+		
+		prep.setString(1, code);
+		ResultSet res = prep.executeQuery();
+		if (res.next()) {
+			id = res.getInt("id");
+			return id;
+		}
+		return -1;
     }
     
     // Finds a specific user based on the name of the user, and returns it as an user object

@@ -122,21 +122,25 @@ public class LoginController {
     
     // This function compares the invitation code to find appropriate account
     public void handleInvitationCode() throws SQLException {
+    	
     	String username = usernameField.getText();
         String password = passwordField.getText();
         String confirmPass = confirmPasswordField.getText();
         String code = invitationCodeField.getText();
-        System.out.println(code.getClass().getName());
-        System.out.println(userService.getCode().getClass().getName());
-        if(code.equals(userService.getCode())) {
+        
+        //check if code exist
+        int codeexist = userService.compareCode(code);
+        
+        if(codeexist > -1) {
         	if(!username.isEmpty() || !password.isEmpty() || !confirmPass.isEmpty()) {
-        		System.out.println("true");
+        		//System.out.println("true");
         		User user = new User(username, password);
         		user.addRole(new Role("Student"));
         		userService.addUser(user);
         		System.out.println(user);
         		loadSetupAccountPage(user);
-        		userService.clearCode();
+        		//userService.clearCode();
+        		userService.removeCode(codeexist);
         		
         	} else if(username.isEmpty() || password.isEmpty() || confirmPass.isEmpty()) {
         		errorMessageLabel.setText("Please fill in all fields above first.");
@@ -145,6 +149,9 @@ public class LoginController {
         	errorMessageLabel.setText("Incorrect Invite Code.");
         }
         // Process the invitation code and navigate to account setup
+        
+        
+        
     }
 
 
