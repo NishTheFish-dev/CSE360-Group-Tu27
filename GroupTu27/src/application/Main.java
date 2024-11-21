@@ -30,24 +30,18 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));	//Start the app by opening the login screen
-    	//LoginController controller = loader.getController();
-    	//controller.printTable();
-
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(loader.load()));
         primaryStage.show();																//Show GUI after loading the scene
         
     }
 
-    public static void main(String[] args) {
-    	try {
-			UserService userService = new UserService();
-			userService.PrintTables();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+    public static void main(String[] args) throws SQLException{
     	System.out.println("java version: "+System.getProperty("java.version"));
     	System.out.println("javafx.version: " + System.getProperty("javafx.version"));
+		UserService userService = new UserService();
+		userService.PrintTables();
+		
         launch(args);
     }
 }
