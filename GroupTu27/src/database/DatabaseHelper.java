@@ -63,10 +63,15 @@ public class DatabaseHelper {
                                            "references VARCHAR(255), " +
                                            "groups VARCHAR(255)," +
                                            "levels VARCHAR(255))";
-
+        
+        String createInviteUserCodeTableSQL = 	"CREATE TABLE IF NOT EXISTS InviteCodes(" +
+        										"id BIGINT AUTO_INCREMENT PRIMARY KEY," +
+        										"code VARCHAR(255))";
+        
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(createUserTableSQL);
             stmt.execute(createHelpArticleTableSQL);
+            stmt.execute(createInviteUserCodeTableSQL);
         }
     }
     
@@ -123,7 +128,7 @@ public class DatabaseHelper {
             pstmt.executeUpdate();
         }
     }
-
+    
     // Insert a new help article into the HelpArticles table
     public void insertHelpArticle(HelpArticle article) throws SQLException {
         String insertArticleSQL = "INSERT INTO HelpArticles (id, header, title, description, keywords, body, references, groups, levels) " +
@@ -142,6 +147,16 @@ public class DatabaseHelper {
         }
     }
     
+    // Insert a new code into the Invite Code table
+    public void insertInviteCodes(String code) throws SQLException{
+    	String insertInviteCodeSQL = "INSERT INTO InviteCodes (id) " + 
+    								 "Values (?)";
+    	
+    	try (PreparedStatement pstmt = connection.prepareStatement(insertInviteCodeSQL)) {
+    		pstmt.setString(1, code);
+    		pstmt.executeUpdate();
+    	}
+    }
     // Deletes a user
     public void deleteUser(User user) throws SQLException {
     	String sql = "DELETE FROM Users WHERE username="+user.getUsername();

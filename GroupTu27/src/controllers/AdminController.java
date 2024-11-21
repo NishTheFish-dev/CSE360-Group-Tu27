@@ -160,7 +160,7 @@ public class AdminController {
     }
 
     // Generate a random one-time password (can be improved as needed)
-    public static String generateOneTimePassword() {
+    private String generateOneTimePassword() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuilder password = new StringBuilder();
@@ -315,7 +315,7 @@ public class AdminController {
     }
     
     
-    private String generateCode() {	// Generating a code, likely for an invitation
+    public static String generateCode() {	// Generating a code, likely for an invitation
     	int length = 6; //Code length will be 6, underneath is the string of characters it can take from
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random(); //Random variable

@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.text.Text;
 import controllers.AdminController;
 import models.Role;
 
@@ -15,37 +16,39 @@ public class InviteUserController {
 
 	@FXML
 	private CheckBox AdminCheckBox, InstructorCheckBox, StudentCheckBox;
-	
+	@FXML
+	private Text GeneratedCodeText;
 	@FXML
     private void initialize() {
 		
 	}
 
 	@FXML
-	public void generateOTCButtonClicked() {
+	private void generateOTCButtonClicked() {
 		Boolean Adminchecked = false;
 		Boolean Instructorchecked = false;
 		Boolean Studentchecked = false;
 		
 		if (AdminCheckBox.isSelected()) {
 			Adminchecked = true;
-			System.out.println("admin selected");
+			//System.out.println("admin selected");
 		}
 		if (InstructorCheckBox.isSelected()) {
 			Instructorchecked = true;
-			System.out.println("instructor selected");
+			//System.out.println("instructor selected");
 		}
 		if (StudentCheckBox.isSelected()) {
 			Studentchecked = true;
-			System.out.println("student selected");
+			//System.out.println("student selected");
 		}
 		
 		if ((Adminchecked || Instructorchecked || Studentchecked) == false) {
-			System.out.println("please select at least one option");
+			//System.out.println("please select at least one option");
 		}
 		else {
-			String otp = AdminController.generateOneTimePassword();
-			System.out.println(otp);
+			String otp = AdminController.generateCode();
+			GeneratedCodeText.setText("Your Code:\t" + otp);
+			//System.out.println(otp);
 		}
 		
 		

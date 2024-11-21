@@ -65,8 +65,9 @@ public class UserService {
     	return currentUser;	// Returns the current user
     }
     
-    public void addCode(String code) {
+    public void addCode(String code) throws SQLException {
     	codes.add(code);	// Add a new code
+    	this.dbHelper.insertInviteCodes(code); //adds code to database
     }
     public String getCode() {
     	return codes.get(0);	// Get the code
