@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The Manage Help Articles Controller handles the initialization and manipulation of the help articles.
+ * 
+ * It is capable of initializing, loading, adding, deleting, backing up, and restoring the articles.
+ * It can also show errors and alerts
+ */
+
 public class ManageHelpArticlesController {
 
     @FXML private ListView<String> articleListView;
@@ -23,6 +30,10 @@ public class ManageHelpArticlesController {
     private final HelpArticleService helpArticleService;
     private final BackupRestoreHelper backupRestoreHelper = new BackupRestoreHelper();
     private String selectedLevel;
+    
+    /**
+     * Default Constructor
+     */
     public ManageHelpArticlesController() {
         HelpArticleService tempService;
         try {
@@ -34,6 +45,11 @@ public class ManageHelpArticlesController {
         this.helpArticleService = tempService;
     }
     
+    /**
+     * This function initializes the articles
+     * 
+     * @throws SQLException
+     */
     @FXML
     public void initialize() throws SQLException {
         if (helpArticleService != null) {
@@ -53,7 +69,11 @@ public class ManageHelpArticlesController {
     	System.out.print(selectedLevel);
     }
     
-
+    /**
+     * This function loads the articles needed
+     * 
+     * @throws SQLException
+     */
     private void loadArticles() throws SQLException{
     	List<String> displayArticles = new ArrayList<>();
     	List<HelpArticle> allArticles = helpArticleService.getAllArticles();

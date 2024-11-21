@@ -4,6 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * This file holds the encryption method to secure all sensitive data.
+ */
+
 public class Encryption {
 	
 	public static String getSHA(String input) throws NoSuchAlgorithmException {

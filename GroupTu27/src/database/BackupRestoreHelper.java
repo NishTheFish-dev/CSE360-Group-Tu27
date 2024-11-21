@@ -11,7 +11,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
+/**
+ * The Backup-Restore Helper handles the backup and restoration of the articles in the database
+ */
 
 public class BackupRestoreHelper {
 

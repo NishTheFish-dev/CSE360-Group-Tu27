@@ -10,6 +10,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The Student Controller is used to give the Student accounts function
+ * 
+ * This page is able to search, setup and display various articles, send messages, and show alerts
+ */
+
 public class StudentController {
 
     @FXML private TextField searchField;
@@ -23,6 +29,9 @@ public class StudentController {
     private ObservableList<String> currentGroups;
     private ObservableList<String> searchResults;
 
+    /**
+     * This is the main constructor
+     */
     public StudentController() {
         HelpArticleService tempService;
         try {
@@ -34,6 +43,9 @@ public class StudentController {
         this.helpArticleService = tempService;
     }
 
+    /**
+     * This initializes the articles
+     */
     @FXML
     public void initialize() {
         if (helpArticleService != null) {
@@ -42,6 +54,9 @@ public class StudentController {
         }
     }
 
+    /**
+     * This function loads the articles
+     */
     private void loadArticles() {
         List<HelpArticle> articles = helpArticleService.getAllArticles();
         allArticles = FXCollections.observableArrayList(articles);
@@ -60,12 +75,18 @@ public class StudentController {
         groupChoiceBox.setValue("All");
     }
 
+    /**
+     * This functions sets up filters to be used
+     */
     private void setupFilters() {
         // Populate levels
         levelChoiceBox.getItems().addAll("All", "Beginner", "Intermediate", "Advanced", "Expert");
         levelChoiceBox.setValue("All");
     }
 
+    /**
+     * This function handles searching
+     */
     @FXML
     private void handleSearch() {
         String searchText = searchField.getText().toLowerCase();
@@ -86,11 +107,20 @@ public class StudentController {
                 .forEach(article -> searchResults.add(formatShortArticle(article)));
     }
 
+    /**
+     * This function is just the format for a short article
+     * 
+     * @param article
+     * @return
+     */
     private String formatShortArticle(HelpArticle article) {
         return String.format("%s: %s (Level: %s) - %s",
                 article.getId(), article.getTitle(), article.getLevel(), article.getDescription());
     }
 
+    /**
+     * This function handles the viewing of articles
+     */
     @FXML
     private void handleViewArticle() {
         String selectedItem = searchResultsListView.getSelectionModel().getSelectedItem();
@@ -107,6 +137,11 @@ public class StudentController {
         }
     }
 
+    /**
+     * This function is capable of displaying the full article of whichever is required
+     * 
+     * @param article
+     */
     private void displayFullArticle(HelpArticle article) {
         Alert articleAlert = new Alert(Alert.AlertType.INFORMATION);
         articleAlert.setTitle("Article Details");
@@ -119,6 +154,9 @@ public class StudentController {
         articleAlert.showAndWait();
     }
 
+    /**
+     * This function is able to send generic messages or alerts if invalid
+     */
     @FXML
     private void handleSendGenericMessage() {
         String message = messageField.getText().trim();
@@ -132,6 +170,9 @@ public class StudentController {
         }
     }
 
+    /**
+     * This function is able to send specific messages or alerts if invalid
+     */
     @FXML
     private void handleSendSpecificMessage() {
         String message = messageField.getText().trim();
@@ -144,7 +185,13 @@ public class StudentController {
             showAlert("Success", "Your specific request has been sent to the system.");
         }
     }
-
+    
+    /**
+     * This function is able to show alerts when needed
+     * 
+     * @param title
+     * @param content
+     */
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

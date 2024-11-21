@@ -31,20 +31,37 @@ public class HelpArticleService {
 	private Statement statement = null; 
 	//	PreparedStatement pstmt
 	
+	/**
+	 * Loads articles from database
+	 * @throws SQLException
+	 */
 	public HelpArticleService() throws SQLException {
         this.dbHelper = new DatabaseHelper();
         this.articles = dbHelper.getAllHelpArticles(); // Load articles from database
     }
 
+	/**
+	 * Add articles to database
+	 * @param article
+	 * @throws SQLException
+	 */
     public void addArticle(HelpArticle article) throws SQLException {
         articles.add(article);
         dbHelper.insertHelpArticle(article); // Save new article to database
     }
 
+    /**
+     * Returns all articles 
+     */
     public List<HelpArticle> getAllArticles() {
         return articles;	// Returns all articles
     }
 
+    /**
+     * Get the current instance
+     * @return
+     * @throws SQLException
+     */
     public static HelpArticleService getInstance() throws SQLException {
         if (instance == null) {
             instance = new HelpArticleService();
@@ -52,6 +69,10 @@ public class HelpArticleService {
         return instance;	// Returns the current instance
     }
 
+    /**
+     * remove a specified article
+     * @param article
+     */
     public void removeArticle(HelpArticle article) {
         articles.remove(article);	// Remove an article
         try {
@@ -62,24 +83,43 @@ public class HelpArticleService {
 		}
     }
 
+    /**
+     * update an article with new information
+     * @param updatedArticle
+     */
     public void updateArticle(HelpArticle updatedArticle) {
         articles = articles.stream()
                 .map(article -> article.getId() == updatedArticle.getId() ? updatedArticle : article)
                 .collect(Collectors.toList());	// Update an article with the  new article
     }
 
+    /**
+     * search for a specific article
+     * @param keyword
+     * @return
+     */
     public List<HelpArticle> searchArticles(String keyword) {
         return articles.stream()
                 .filter(article -> article.getKeywords().contains(keyword))
                 .collect(Collectors.toList());	// Finds an article via keywords
     }
 
+    /**
+     * list articles sorted by group
+     * @param group
+     * @return
+     */
     public List<HelpArticle> listArticlesByGroup(String group) {
         return articles.stream()
                 .filter(article -> article.belongsToGroup(group))
                 .collect(Collectors.toList()); // List all articles, sorted by groups
     }
     
+    /**
+     * get an article via name
+     * @return
+     * @throws SQLException
+     */
     public List<String> getArticlesByName() throws SQLException {
     	List<String> articles = new ArrayList<>();
     	String sql = "SELECT title from HelpArticles";

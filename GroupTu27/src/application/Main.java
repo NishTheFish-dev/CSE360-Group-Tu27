@@ -16,13 +16,13 @@ import java.sql.SQLException;
 import services.UserService;
 
 /**
- * This app is in phase 2.
+ * This app is in phase 3.
  * 
- * For phase 2, a database has been added to store information about users and help articles.
- * There are also more functionalities for admin users for managing users, roles, and help articles.
- * Instructors and Admins can manage articles, Students are able to view them.
+ * For phase 3, the ability to search, display, and ask the SO team for assistance has been added.
+ * The most important part of this phase is the encryption of sensitive data to prevent leaks.
+ * Security and Privacy have been strongly reinforced.
  * 
- * @version 2.4.0
+ * @version 2.6.0
  **/
 
 public class Main extends Application {
