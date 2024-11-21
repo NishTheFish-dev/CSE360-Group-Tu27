@@ -185,8 +185,6 @@ public class LoginController {
         }
     }
 
-    
-    
 	// In the case somebody has been assigned more than 1 role, this allows them to choose which home page to navigate to
     private void loadRoleHomePage(User user, Role role) {
         try {

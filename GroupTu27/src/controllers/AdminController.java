@@ -19,6 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -122,40 +123,16 @@ public class AdminController {
     
     //Invite User button controls
     @FXML
-    private void handleInviteUser() {
-        //String username = inviteUsernameField.getText();	// Choose a username to assign to the new user
-        //String roleName = inviteRoleField.getText();	// Choose a role to assign to the new user
-        roleChoice.setVisible(false);
-        roleLabel.setVisible(false);
-    	String inviteCode = generateCode();
-    	userService.clearCode();
-       // if (username.isEmpty() || roleName.isEmpty()) {	// If either field is empty, cancel and possibly send error msg
-        //    return;  // Add some validation feedback here
-      //  }
+    private void handleInviteUser() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/InviteUser.fxml"));
+        Parent root = loader.load();
 
-     //   Role role = new Role(roleName);	//assign the chosen role to a variable through the Role command
-      //  InvitationCode code = new InvitationCode(generateCode(), role, LocalDateTime.now().plusDays(1));  // 1 day expiration
-
-      //  System.out.println("Invitation Code: " + code.getCode());  // Simulate sending the code to the user
-        
-        // Store the user (you'll need a service to save this)
-      //  User newUser = new User(username, null);  // No password yet, user will create it
-       // newUser.addRole(role);	// Assign the new user the specified role by admin
-       // userService.addUser(newUser); // After adding all of the information, add the user to the list
-        //updateUserList();		// Update the list to include the new user
-        inviteCodeLabel.setVisible(true);
-        inviteCodeLabel.setText("Random Code: " + inviteCode);
-        userService.addCode(inviteCode);
+        // Open the ManageHelpArticles view in a new stage
+        Stage stage = new Stage();
+        stage.setTitle("Invite User");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
-
-    /* TEST LATER
-    private void updateUserList() {	// This function clears and re-adds users to allow for an updated list
-        userListView.getItems().clear();
-        for (User user : users) {
-            userListView.getItems().add(user.getUsername() + " - Roles: " + user.getRoles());
-        }
-    }
-    */
     
     // This function will open the page used for resetting user accounts
     @FXML
