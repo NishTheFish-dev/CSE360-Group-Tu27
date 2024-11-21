@@ -12,14 +12,20 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The Instructor Controller handles the page for the instructor role.
+ * This page is able to handle higher-level article manipulation.
+ * Groups are also able to be created and manipulated in this page.
+ */
+
 public class InstructorController {
 
-    @FXML private TextField searchField, groupNameField;
-    @FXML private ChoiceBox<String> levelChoiceBox, groupChoiceBox;
-    @FXML private ListView<String> searchResultsListView, groupListView;
-    @FXML private TextArea messageField, groupDetailsField;
-    @FXML private Button createGroupButton, deleteGroupButton, backupButton, restoreButton;
-    @FXML private Button searchButton, viewArticleButton, createArticleButton, deleteArticleButton;
+    @FXML private TextField searchField, groupNameField;	//These text fields are for search and group name
+    @FXML private ChoiceBox<String> levelChoiceBox, groupChoiceBox;	//These choice boxed allow choice for groups and levels
+    @FXML private ListView<String> searchResultsListView, groupListView;	//These lists show search results and groups
+    @FXML private TextArea messageField, groupDetailsField;	//These text areas are for messages and group details
+    @FXML private Button createGroupButton, deleteGroupButton, backupButton, restoreButton;	//These buttons are for group creation/deletion and article backup/restoration
+    @FXML private Button searchButton, viewArticleButton, createArticleButton, deleteArticleButton;	//These buttons are for search and other article functions
 
     private final HelpArticleService helpArticleService;
     private final BackupRestoreHelper backupRestoreHelper = new BackupRestoreHelper();
@@ -27,6 +33,9 @@ public class InstructorController {
     private ObservableList<String> currentGroups;
     private ObservableList<String> searchResults;
 
+    /**
+     * Default Constructor
+     */
     public InstructorController() {
         HelpArticleService tempService;
         try {
@@ -38,6 +47,9 @@ public class InstructorController {
         this.helpArticleService = tempService;
     }
 
+    /**
+     * Initialization of articles and filters
+     */
     @FXML
     public void initialize() {
         if (helpArticleService != null) {
@@ -46,6 +58,9 @@ public class InstructorController {
         }
     }
 
+    /**
+     * Load the articles from the database
+     */
     private void loadArticles() {
         List<HelpArticle> articles = helpArticleService.getAllArticles();
         allArticles = FXCollections.observableArrayList(articles);
@@ -65,12 +80,18 @@ public class InstructorController {
         groupListView.setItems(currentGroups);
     }
 
+    /**
+     * Set up filters 
+     */
     private void setupFilters() {
         // Populate levels
         levelChoiceBox.getItems().addAll("All", "Beginner", "Intermediate", "Advanced", "Expert");
         levelChoiceBox.setValue("All");
     }
 
+    /**
+     * Handle the search functions
+     */
     @FXML
     private void handleSearch() {
         String searchText = searchField.getText().toLowerCase();
@@ -79,7 +100,7 @@ public class InstructorController {
 
         searchResults.clear();
 
-        allArticles.stream()
+        allArticles.stream()	//This determines and gathers article information to be shown
                 .filter(article -> (searchText.isEmpty() ||
                         article.getTitle().toLowerCase().contains(searchText) ||
                         article.getDescription().toLowerCase().contains(searchText) ||
@@ -90,11 +111,19 @@ public class InstructorController {
                 .forEach(article -> searchResults.add(formatShortArticle(article)));
     }
 
+    /**
+     * This function is for formatting short articles
+     * @param article
+     * @return
+     */
     private String formatShortArticle(HelpArticle article) {
         return String.format("%s: %s (Level: %s) - %s",
                 article.getId(), article.getTitle(), article.getLevel(), article.getDescription());
     }
 
+    /**
+     * This function is for handling the viewing of articles
+     */
     @FXML
     private void handleViewArticle() {
         String selectedItem = searchResultsListView.getSelectionModel().getSelectedItem();
@@ -111,6 +140,10 @@ public class InstructorController {
         }
     }
 
+    /**
+     * This function displays a full article
+     * @param article
+     */
     private void displayFullArticle(HelpArticle article) {
         Alert articleAlert = new Alert(Alert.AlertType.INFORMATION);
         articleAlert.setTitle("Article Details");
@@ -123,6 +156,9 @@ public class InstructorController {
         articleAlert.showAndWait();
     }
 
+    /**
+     * This function handle the creation of new groups
+     */
     @FXML
     private void handleCreateGroup() {
         String groupName = groupNameField.getText().trim();
@@ -137,6 +173,9 @@ public class InstructorController {
         }
     }
 
+    /**
+     * This function handles the deletion of groups
+     */
     @FXML
     private void handleDeleteGroup() {
         String selectedGroup = groupListView.getSelectionModel().getSelectedItem();
@@ -146,6 +185,9 @@ public class InstructorController {
         }
     }
 
+    /**
+     * This function handles backing up the article database
+     */
     @FXML
     private void handleBackup() {
         try {
@@ -156,6 +198,9 @@ public class InstructorController {
         }
     }
 
+    /**
+     * This function handles restoring an article database
+     */
     @FXML
     private void handleRestore() {
         try {
@@ -167,6 +212,11 @@ public class InstructorController {
         }
     }
 
+    /**
+     * This function handles showing alerts to the user
+     * @param title
+     * @param content
+     */
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

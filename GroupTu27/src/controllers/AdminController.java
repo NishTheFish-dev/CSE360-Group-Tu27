@@ -174,18 +174,16 @@ public class AdminController {
     // This function will open the page used for deleting user accounts
     @FXML
     private void handleDeleteUserAccount() {	// Function used for the "Delete User Account" button
-    	//TO-DO
-    	
-    	inviteCodeLabel.setVisible(false);
+    	inviteCodeLabel.setVisible(false);	// Hide the invite code so no overlapping
     	List<String> userNames = new ArrayList<>();
     	userNames = userService.getUsers().stream().map(User::getUsername).collect(Collectors.toList());
     	ObservableList<String> users = FXCollections.observableArrayList(userNames);
     	System.out.println(userNames);
     	System.out.println(users);
-    	userListView.setItems(users);
-    	userListView.setVisible(true);
-    	deleteButton.setVisible(false);
-    	confirmButton.setVisible(true);
+    	userListView.setItems(users);	// Setup the list to hold the users
+    	userListView.setVisible(true);	// Show the list of users
+    	deleteButton.setVisible(false);	// Hide the delete button
+    	confirmButton.setVisible(true);	// Show the confirm button
     	showAlert("How to Delete", "Please select an account and click confirm delete.");
     	
     }
@@ -193,13 +191,13 @@ public class AdminController {
     //This function gathers the information needed for deleting a user and send it to handleDeleteUserAccount()
     @FXML
     private void deleteUser() {
-    	tempUser = userService.findUserByUsername(userListView.getSelectionModel().getSelectedItem());
+    	tempUser = userService.findUserByUsername(userListView.getSelectionModel().getSelectedItem());	//select the user
     	System.out.println(tempUser);
-    	userService.removeUser(tempUser);
+    	userService.removeUser(tempUser);	// Remove the user
 		System.out.println(userService.getUsers());
-		userListView.setVisible(false);
-		confirmButton.setVisible(false);
-		deleteButton.setVisible(true);
+		userListView.setVisible(false);	//hide the list
+		confirmButton.setVisible(false);//hide confirm button
+		deleteButton.setVisible(true);	//show delete button
     }
     
     // This function will open the page used for listing all users
