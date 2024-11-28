@@ -218,11 +218,11 @@ public class DatabaseHelper {
     	User user = userService.findUserByUsername(username);
     	for(int i = 0; i < user.getRoles().size(); i++) {
     		if(user.getRoles().get(i).getRoleName() == "a") {
-    			totalRoles += "a";
+    			totalRoles += "Admin";
     		} else if(user.getRoles().get(i).getRoleName() == "i") {
-    			totalRoles += "i";
+    			totalRoles += "Instructor";
     		} else if(user.getRoles().get(i).getRoleName() == "s") {
-    			totalRoles += "s";
+    			totalRoles += "Student";
     		}
     	}
     	try (PreparedStatement pstmt = connection.prepareStatement(sql)){
